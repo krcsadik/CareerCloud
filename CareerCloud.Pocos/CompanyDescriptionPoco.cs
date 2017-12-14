@@ -15,7 +15,6 @@ namespace CareerCloud.Pocos
         [Key]
         public Guid Id { get { return varId; } set { varId = value; } }
         public Guid Company { get { return varCompany; } set { varCompany = value; } }
-        [Column("Language_Id")]
         public String LanguageID { get { return varLanguageID; } set { varLanguageID = value; } }
         [Column("Company_Name")]
         public String CompanyName { get { return varCompanyName; } set { varCompanyName = value; } }
