@@ -11,11 +11,11 @@ namespace CareerCloud.Pocos
         private Decimal? varCurrentSalary;
         private Decimal? varCurrentRate;
         private String varCurrency;
-        private String varCountryCode;
-        private String varStateProvinceCode;
-        private String varStreetAddress;
-        private String varCityTown;
-        private String varZipPostalCode;
+        private String varCountry;
+        private String varProvince;
+        private String varStreet;
+        private String varCity;
+        private String varPostalCode;
         private Byte[] varTimeStamp;
         [Key]
         public Guid Id { get { return varId; } set { varId = value; } }
@@ -26,15 +26,15 @@ namespace CareerCloud.Pocos
         public Decimal? CurrentRate { get { return varCurrentRate; } set { varCurrentRate = value; } }
         public String Currency { get { return varCurrency; } set { varCurrency = value; } }
         [Column("Country_Code")]
-        public String CountryCode { get { return varCountryCode; } set { varCountryCode = value; } }
-        [Column("State_Province_code")]
-        public String StateProvinceCode { get { return varStateProvinceCode; } set { varStateProvinceCode = value; } }
+        public String Country { get { return varCountry; } set { varCountry = value; } }
+        [Column("State_Province_Code")]
+        public String Province { get { return varProvince; } set { varProvince = value; } }
         [Column("Street_Address")]
-        public String StreetAddress { get { return varStreetAddress; } set { varStreetAddress = value; } }
+        public String Street { get { return varStreet; } set { varStreet = value; } }
         [Column("City_Town")]
-        public String CityTown { get { return varCityTown; } set { varCityTown = value; } }
+        public String City { get { return varCity; } set { varCity = value; } }
         [Column("Zip_Postal_Code")]
-        public String ZipPostalCode { get { return varZipPostalCode; } set { varZipPostalCode = value; } }
+        public String PostalCode { get { return varPostalCode; } set { varPostalCode = value; } }
         [Column("Time_Stamp")]
         public Byte[] TimeStamp { get { return varTimeStamp; } set { varTimeStamp = value; } }
     }

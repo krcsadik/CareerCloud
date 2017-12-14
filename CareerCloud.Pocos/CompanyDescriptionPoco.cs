@@ -8,14 +8,14 @@ namespace CareerCloud.Pocos
     {
         private Guid varId;
         private Guid varCompany;
-        private String varLanguageID;
+        private String varLanguageId;
         private String varCompanyName;
         private String varCompanyDescription;
         private Byte[] varTimeStamp;
         [Key]
         public Guid Id { get { return varId; } set { varId = value; } }
         public Guid Company { get { return varCompany; } set { varCompany = value; } }
-        public String LanguageID { get { return varLanguageID; } set { varLanguageID = value; } }
+        public String LanguageId { get { return varLanguageId; } set { varLanguageId = value; } }
         [Column("Company_Name")]
         public String CompanyName { get { return varCompanyName; } set { varCompanyName = value; } }
         [Column("Company_Description")]

@@ -10,9 +10,9 @@ namespace CareerCloud.Pocos
         private String varLogin;
         private String varPassword;
         private String varSalt;
-        private DateTime varCreatedDate;
-        private DateTime? varPasswordUpdateDated;
-        private DateTime varAgreementAcceptedDate;
+        private DateTime varCreated;
+        private DateTime? varPasswordUpdate;
+        private DateTime? varAgreementAccepted;
         private Boolean varIsLocked;
         private Boolean varIsInactive;
         private String varEmailAddress;
@@ -27,11 +27,11 @@ namespace CareerCloud.Pocos
         public String Password { get { return varPassword; } set { varPassword = value; } }
         public String Salt { get { return varSalt; } set { varSalt = value; } }
         [Column("Created_Date")]
-        public DateTime CreatedDate { get { return varCreatedDate; } set { varCreatedDate = value; } }
-        [Column("Password_Update_Dated")]
-        public DateTime? PasswordUpdateDated { get { return varPasswordUpdateDated; } set { varPasswordUpdateDated = value; } }
+        public DateTime Created { get { return varCreated; } set { varCreated = value; } }
+        [Column("Password_Update_Date")]
+        public DateTime? PasswordUpdate { get { return varPasswordUpdate; } set { varPasswordUpdate = value; } }
         [Column("Agreement_Accepted_Date")]
-        public DateTime AgreementAcceptedDate { get { return varAgreementAcceptedDate; } set { varAgreementAcceptedDate = value; } }
+        public DateTime? AgreementAccepted { get { return varAgreementAccepted; } set { varAgreementAccepted = value; } }
         [Column("Is_Locked")]
         public Boolean IsLocked { get { return varIsLocked; } set { varIsLocked = value; } }
         [Column("Is_Inactive")]

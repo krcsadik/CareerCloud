@@ -9,13 +9,13 @@ namespace CareerCloud.Pocos
         private Guid varId;
         private Guid varJob;
         private String varMajor;
-        private Int32 varImportance;
+        private Int16 varImportance;
         private Byte[] varTimeStamp;
         [Key]
         public Guid Id { get { return varId; } set { varId = value; } }
         public Guid Job { get { return varJob; } set { varJob = value; } }
         public String Major { get { return varMajor; } set { varMajor = value; } }
-        public Int32 Importance { get { return varImportance; } set { varImportance = value; } }
+        public Int16 Importance { get { return varImportance; } set { varImportance = value; } }
         [Column("Time_Stamp")]
         public Byte[] TimeStamp { get { return varTimeStamp; } set { varTimeStamp = value; } }
     }
