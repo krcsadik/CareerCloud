@@ -16,22 +16,30 @@ namespace CareerCloud.ADODataAccessLayer
         private const int _maxRecordNo = 500;
         public void Add(params ApplicantWorkHistoryPoco[] items)
         {
-            _cmdSQL = @"INSERT INTO [dbo].[Applicant_Educations]
+            _cmdSQL = @"INSERT INTO [dbo].[Applicant_Work_History]
                ([Id]
                ,[Applicant]
-               ,[Major]
-               ,[Cetificate_Diploma]
-               ,[Start_Date]
-               ,[Completion_Date]
-               ,[Completion_Percent])
+               ,[Company_Name]
+               ,[Country_Code]
+               ,[Location]
+               ,[Job_Title]
+               ,[Job_Description]
+               ,[Start_Month]
+               ,[Start_Year]
+               ,[End_Month]
+               ,[End_Year])
                 VALUES
-               (@Id,
-                @Applicant, 
-                @Major,
-                @Cetificate_Diploma,
-                @Start_Date,
-                @Completion_Date,
-                @Completion_Percent)";
+               (@Id
+               ,@Applicant
+               ,@Company_Name
+               ,@Country_Code
+               ,@Location
+               ,@Job_Title
+               ,@Job_Description
+               ,@Start_Month
+               ,@Start_Year
+               ,@End_Month
+               ,@End_Year)";
 
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {
@@ -42,19 +50,23 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (ApplicantWorkHistoryPoco poco in items)
                     {
-                            ApplicantWorkHistoryPoco oPoco = new ApplicantWorkHistoryPoco();
-                            cmd.Parameters.AddWithValue("Id", poco.Id);
-                            cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
-                            cmd.Parameters.AddWithValue("Major", poco.Major);
-                            cmd.Parameters.AddWithValue("Cetificate_Diploma", poco.CertificateDiploma);
-                            cmd.Parameters.AddWithValue("Start_Date", poco.StartDate);
-                            cmd.Parameters.AddWithValue("Completion_Date", poco.CompletionDate);
-                            cmd.Parameters.AddWithValue("Completion_Percent", poco.CompletionPercent);
-                            con.Open();
-                            cmd.ExecuteNonQuery();
-                            con.Close();
-                            }
+                        ApplicantWorkHistoryPoco oPoco = new ApplicantWorkHistoryPoco();
+                        cmd.Parameters.AddWithValue("Id", poco.Id);
+                        cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
+                        cmd.Parameters.AddWithValue("Company_Name", poco.CompanyName);
+                        cmd.Parameters.AddWithValue("Country_Code", poco.CountryCode);
+                        cmd.Parameters.AddWithValue("Location", poco.Location);
+                        cmd.Parameters.AddWithValue("Job_Title", poco.JobTitle);
+                        cmd.Parameters.AddWithValue("Job_Description", poco.JobDescription);
+                        cmd.Parameters.AddWithValue("Start_Month", poco.StartMonth);
+                        cmd.Parameters.AddWithValue("Start_Year", poco.StartYear);
+                        cmd.Parameters.AddWithValue("End_Month", poco.EndMonth);
+                        cmd.Parameters.AddWithValue("End_Year", poco.EndYear);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
                     }
+                }
                 catch (Exception e)
                 {
                     throw new Exception("ApplicantWorkHistoryPoco.Add-->Insertion error : " + e.ToString());
@@ -73,15 +85,19 @@ namespace CareerCloud.ADODataAccessLayer
 
         public IList<ApplicantWorkHistoryPoco> GetAll(params Expression<Func<ApplicantWorkHistoryPoco, object>>[] navigationProperties)
         {
-            _cmdSQL = @"SELECT[Id]
+            _cmdSQL = @"SELECT [Id]
               ,[Applicant]
-              ,[Major]
-              ,[Cetificate_Diploma]
-              ,[Start_Date]
-              ,[Completion_Date]
-              ,[Completion_Percent]
+              ,[Company_Name]
+              ,[Country_Code]
+              ,[Location]
+              ,[Job_Title]
+              ,[Job_Description]
+              ,[Start_Month]
+              ,[Start_Year]
+              ,[End_Month]
+              ,[End_Year]
               ,[Time_Stamp]
-                FROM[dbo].[Applicant_Educations]";
+              FROM [dbo].[Applicant_Work_History]";
             using (SqlConnection con = new SqlConnection(DBConnectionString)) 
             {
                 try
@@ -96,13 +112,17 @@ namespace CareerCloud.ADODataAccessLayer
                         ApplicantWorkHistoryPoco poco = new ApplicantWorkHistoryPoco();
                         poco.Id = (Guid)reader["Id"];
                         poco.Applicant = (Guid)reader["Applicant"];
-                        poco.Major = (String)reader["Major"];
-                        poco.CertificateDiploma = (String)reader["CertificateDiploma"];
-                        poco.StartDate = (DateTime)reader["StartDate"];
-                        poco.CompletionDate = (DateTime)reader["CompletionDate"];
-                        poco.CompletionPercent = (Byte)reader["CompletionPercent"];
-                        poco.TimeStamp = (Byte[])reader["TimeStamp"];
-                        arrPoco[recordIndex] = poco;
+                        poco.CompanyName = (String)reader["Company_Name"];
+                        poco.CountryCode = (String)reader["Country_Code"];
+                        poco.Location = (String)reader["Location"];
+                        poco.JobTitle = (String)reader["Job_Title"];
+                        poco.JobDescription = (String)reader["Job_Description"];
+                        poco.StartMonth= (short)reader["Start_Month"];
+                        poco.StartYear= (int)reader["Start_Year"];
+                        poco.EndMonth = (short)reader["End_Month"];
+                        poco.EndYear = (int)reader["End_Year"];
+                        poco.TimeStamp = (Byte[])reader["Time_Stamp"];
+                        arrPoco[recordIndex++] = poco;
                     }
                     return arrPoco.Where(a => a != null).ToList();
                 }
@@ -137,7 +157,7 @@ namespace CareerCloud.ADODataAccessLayer
 
         public void Remove(params ApplicantWorkHistoryPoco[] items)
         {
-            _cmdSQL = @"DELETE FROM [dbo].[Applicant_Educations]
+            _cmdSQL = @"DELETE FROM [dbo].[Applicant_Work_History]
                 WHERE Id =@Id)";
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {
@@ -168,15 +188,18 @@ namespace CareerCloud.ADODataAccessLayer
 
         public void Update(params ApplicantWorkHistoryPoco[] items)
         {
-            _cmdSQL = @"UPDATE [dbo].[Applicant_Educations]
-                SET [Id]=@Id,
-                    [Applicant]=@Applicant,
-                    [Major]=@Major,
-                    [Cetificate_Diploma]=@Cetificate_Diploma,
-                    [Start_Date]=@Start_Date,
-                    [Completion_Date]=@Completion_Date,
-                    [Completion_Percent]=@Completion_Percent
-                    Where Id=@Id)";
+            _cmdSQL = @"UPDATE [dbo].[[Applicant_Work_History]]
+                SET [Applicant]=@Applicant
+               ,[Company_Name]=@Company_Name
+               ,[Country_Code]=@Country_Code
+               ,[Location]=@Location
+               ,[Job_Title]=@Job_Title
+               ,[Job_Description]=@Job_Description
+               ,[Start_Month]=@Start_Month
+               ,[Start_Year]=@Start_Year
+               ,[End_Month]=@End_Month
+               ,[End_Year]=@End_Year
+               WHERE Id=@Id)";
 
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {
@@ -190,11 +213,15 @@ namespace CareerCloud.ADODataAccessLayer
                         ApplicantWorkHistoryPoco oPoco = new ApplicantWorkHistoryPoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
-                        cmd.Parameters.AddWithValue("Major", poco.Major);
-                        cmd.Parameters.AddWithValue("Cetificate_Diploma", poco.CertificateDiploma);
-                        cmd.Parameters.AddWithValue("Start_Date", poco.StartDate);
-                        cmd.Parameters.AddWithValue("Completion_Date", poco.CompletionDate);
-                        cmd.Parameters.AddWithValue("Completion_Percent", poco.CompletionPercent);
+                        cmd.Parameters.AddWithValue("Company_Name", poco.CompanyName);
+                        cmd.Parameters.AddWithValue("Country_Code", poco.CountryCode);
+                        cmd.Parameters.AddWithValue("Location", poco.Location);
+                        cmd.Parameters.AddWithValue("Job_Title", poco.JobTitle);
+                        cmd.Parameters.AddWithValue("Job_Description", poco.JobDescription);
+                        cmd.Parameters.AddWithValue("Start_Month", poco.StartMonth);
+                        cmd.Parameters.AddWithValue("Start_Year", poco.StartYear);
+                        cmd.Parameters.AddWithValue("End_Month", poco.EndMonth);
+                        cmd.Parameters.AddWithValue("End_Year", poco.EndYear);
                         con.Open();
                         cmd.ExecuteNonQuery();
                         con.Close();

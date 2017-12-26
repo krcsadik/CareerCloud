@@ -102,7 +102,7 @@ namespace CareerCloud.ADODataAccessLayer
                         poco.CompletionDate = (DateTime)reader["CompletionDate"];
                         poco.CompletionPercent = (Byte)reader["CompletionPercent"];
                         poco.TimeStamp = (Byte[])reader["TimeStamp"];
-                        arrPoco[recordIndex] = poco;
+                        arrPoco[recordIndex++] = poco;
                     }
                     return arrPoco.Where(a => a != null).ToList();
                 }

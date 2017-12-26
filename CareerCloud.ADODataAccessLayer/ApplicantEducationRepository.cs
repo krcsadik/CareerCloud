@@ -42,19 +42,19 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (ApplicantEducationPoco poco in items)
                     {
-                            ApplicantEducationPoco oPoco = new ApplicantEducationPoco();
-                            cmd.Parameters.AddWithValue("Id", poco.Id);
-                            cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
-                            cmd.Parameters.AddWithValue("Major", poco.Major);
-                            cmd.Parameters.AddWithValue("Cetificate_Diploma", poco.CertificateDiploma);
-                            cmd.Parameters.AddWithValue("Start_Date", poco.StartDate);
-                            cmd.Parameters.AddWithValue("Completion_Date", poco.CompletionDate);
-                            cmd.Parameters.AddWithValue("Completion_Percent", poco.CompletionPercent);
-                            con.Open();
-                            cmd.ExecuteNonQuery();
-                            con.Close();
-                            }
+                        ApplicantEducationPoco oPoco = new ApplicantEducationPoco();
+                        cmd.Parameters.AddWithValue("Id", poco.Id);
+                        cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
+                        cmd.Parameters.AddWithValue("Major", poco.Major);
+                        cmd.Parameters.AddWithValue("Cetificate_Diploma", poco.CertificateDiploma);
+                        cmd.Parameters.AddWithValue("Start_Date", poco.StartDate);
+                        cmd.Parameters.AddWithValue("Completion_Date", poco.CompletionDate);
+                        cmd.Parameters.AddWithValue("Completion_Percent", poco.CompletionPercent);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
                     }
+                }
                 catch (Exception e)
                 {
                     throw new Exception("ApplicantEducationPoco.Add-->Insertion error : " + e.ToString());
@@ -73,7 +73,7 @@ namespace CareerCloud.ADODataAccessLayer
 
         public IList<ApplicantEducationPoco> GetAll(params Expression<Func<ApplicantEducationPoco, object>>[] navigationProperties)
         {
-            _cmdSQL = @"SELECT[Id]
+            _cmdSQL = @"SELECT [Id]
               ,[Applicant]
               ,[Major]
               ,[Cetificate_Diploma]
@@ -81,7 +81,7 @@ namespace CareerCloud.ADODataAccessLayer
               ,[Completion_Date]
               ,[Completion_Percent]
               ,[Time_Stamp]
-                FROM[dbo].[Applicant_Educations]";
+              FROM[dbo].[Applicant_Educations]";
             using (SqlConnection con = new SqlConnection(DBConnectionString)) 
             {
                 try
@@ -102,7 +102,7 @@ namespace CareerCloud.ADODataAccessLayer
                         poco.CompletionDate = (DateTime)reader["CompletionDate"];
                         poco.CompletionPercent = (Byte)reader["CompletionPercent"];
                         poco.TimeStamp = (Byte[])reader["TimeStamp"];
-                        arrPoco[recordIndex] = poco;
+                        arrPoco[recordIndex++] = poco;
                     }
                     return arrPoco.Where(a => a != null).ToList();
                 }
@@ -169,8 +169,7 @@ namespace CareerCloud.ADODataAccessLayer
         public void Update(params ApplicantEducationPoco[] items)
         {
             _cmdSQL = @"UPDATE [dbo].[Applicant_Educations]
-                SET [Id]=@Id,
-                    [Applicant]=@Applicant,
+                SET [Applicant]=@Applicant,
                     [Major]=@Major,
                     [Cetificate_Diploma]=@Cetificate_Diploma,
                     [Start_Date]=@Start_Date,
@@ -188,7 +187,6 @@ namespace CareerCloud.ADODataAccessLayer
                     foreach (ApplicantEducationPoco poco in items)
                     {
                         ApplicantEducationPoco oPoco = new ApplicantEducationPoco();
-                        cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
                         cmd.Parameters.AddWithValue("Major", poco.Major);
                         cmd.Parameters.AddWithValue("Cetificate_Diploma", poco.CertificateDiploma);
