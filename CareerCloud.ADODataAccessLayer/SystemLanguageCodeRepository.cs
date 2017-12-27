@@ -17,8 +17,8 @@ namespace CareerCloud.ADODataAccessLayer
             _cmdSQL = @"INSERT INTO [dbo].[System_Language_Codes]
                ([LanguageID]
                ,[Name]
-               ,[Native_Name])
-                VALUES
+               ,[Native_Name]) 
+                VALUES 
                (@LanguageID
                ,@Name
                ,@Native_Name)";

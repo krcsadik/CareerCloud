@@ -87,7 +87,7 @@ namespace CareerCloud.ADODataAccessLayer
                         poco.Job = (Guid)reader["Job"];
                         poco.Major = (String)reader["Major"];
                         poco.Importance = (short)reader["Importance"];
-                        poco.TimeStamp = (Byte[])reader["Time_Stamp"];
+                        poco.TimeStamp = (byte[])reader["Time_Stamp"];
                         arrPoco[recordIndex++] = poco;
                     }
                     return arrPoco.Where(a => a != null).ToList();

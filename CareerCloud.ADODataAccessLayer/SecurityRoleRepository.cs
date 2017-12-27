@@ -21,8 +21,7 @@ namespace CareerCloud.ADODataAccessLayer
                VALUES
                (@Id
                ,@Role
-               ,@Is_Inactive)
-GO";
+               ,@Is_Inactive)";
 
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {

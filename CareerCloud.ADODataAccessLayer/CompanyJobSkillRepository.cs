@@ -127,7 +127,7 @@ namespace CareerCloud.ADODataAccessLayer
 
         public void Remove(params CompanyJobSkillPoco[] items)
         {
-            _cmdSQL = @"DELETE FROM [dbo].[SCompany_Job_Skills] 
+            _cmdSQL = @"DELETE FROM [dbo].[Company_Job_Skills] 
                 WHERE Id =@Id";
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {

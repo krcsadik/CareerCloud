@@ -25,7 +25,7 @@ namespace CareerCloud.ADODataAccessLayer
                ,@Login
                ,@Source_IP
                ,@Logon_Date
-               ,@Is_Succesful";
+               ,@Is_Succesful)";
 
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {
