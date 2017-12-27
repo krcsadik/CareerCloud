@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using CareerCloud.DataAccessLayer;
 using CareerCloud.Pocos;
 using System.Data.SqlClient;
@@ -16,22 +14,18 @@ namespace CareerCloud.ADODataAccessLayer
         private const int _maxRecordNo = 500;
         public void Add(params CompanyJobPoco[] items)
         {
-            _cmdSQL = @"INSERT INTO [dbo].[Applicant_Educations]
+            _cmdSQL = @"INSERT INTO [dbo].[Company_Jobs] 
                ([Id]
-               ,[Applicant]
-               ,[Major]
-               ,[Cetificate_Diploma]
-               ,[Start_Date]
-               ,[Completion_Date]
-               ,[Completion_Percent])
+               ,[Company]
+               ,[Profile_Created]
+               ,[Is_Inactive]
+               ,[Is_Company_Hidden])
                 VALUES
-               (@Id,
-                @Applicant, 
-                @Major,
-                @Cetificate_Diploma,
-                @Start_Date,
-                @Completion_Date,
-                @Completion_Percent)";
+               (@Id
+               ,@Company
+               ,@Profile_Created
+               ,@Is_Inactive
+               ,@Is_Company_Hidden)";
 
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {
@@ -42,19 +36,17 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (CompanyJobPoco poco in items)
                     {
-                            CompanyJobPoco oPoco = new CompanyJobPoco();
-                            cmd.Parameters.AddWithValue("Id", poco.Id);
-                            cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
-                            cmd.Parameters.AddWithValue("Major", poco.Major);
-                            cmd.Parameters.AddWithValue("Cetificate_Diploma", poco.CertificateDiploma);
-                            cmd.Parameters.AddWithValue("Start_Date", poco.StartDate);
-                            cmd.Parameters.AddWithValue("Completion_Date", poco.CompletionDate);
-                            cmd.Parameters.AddWithValue("Completion_Percent", poco.CompletionPercent);
-                            con.Open();
-                            cmd.ExecuteNonQuery();
-                            con.Close();
-                            }
+                        CompanyJobPoco oPoco = new CompanyJobPoco();
+                        cmd.Parameters.AddWithValue("Id", poco.Id);
+                        cmd.Parameters.AddWithValue("Company", poco.Company);
+                        cmd.Parameters.AddWithValue("Profile_Created", poco.ProfileCreated);
+                        cmd.Parameters.AddWithValue("Is_Inactive", poco.IsInactive);
+                        cmd.Parameters.AddWithValue("Is_Company_Hidden", poco.IsCompanyHidden);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
                     }
+                }
                 catch (Exception e)
                 {
                     throw new Exception("CompanyJobPoco.Add-->Insertion error : " + e.ToString());
@@ -73,15 +65,14 @@ namespace CareerCloud.ADODataAccessLayer
 
         public IList<CompanyJobPoco> GetAll(params Expression<Func<CompanyJobPoco, object>>[] navigationProperties)
         {
-            _cmdSQL = @"SELECT[Id]
-              ,[Applicant]
-              ,[Major]
-              ,[Cetificate_Diploma]
-              ,[Start_Date]
-              ,[Completion_Date]
-              ,[Completion_Percent]
-              ,[Time_Stamp]
-                FROM[dbo].[Applicant_Educations]";
+            _cmdSQL = @"SELECT [Id]
+              ,[Company]
+              ,[Profile_Created]
+              ,[Is_Inactive]
+              ,[Is_Company_Hidden]
+              ,[Time_Stamp] 
+              FROM [dbo].[Company_Jobs]";
+
             using (SqlConnection con = new SqlConnection(DBConnectionString)) 
             {
                 try
@@ -89,19 +80,19 @@ namespace CareerCloud.ADODataAccessLayer
                     CompanyJobPoco[] arrPoco = new CompanyJobPoco[_maxRecordNo];
                     SqlCommand cmd = new SqlCommand();
                     cmd.CommandText = _cmdSQL;
+                    cmd.Connection = con;
+                    con.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
                     int recordIndex = 0;
                     while (reader.Read())
                     {
                         CompanyJobPoco poco = new CompanyJobPoco();
                         poco.Id = (Guid)reader["Id"];
-                        poco.Applicant = (Guid)reader["Applicant"];
-                        poco.Major = (String)reader["Major"];
-                        poco.CertificateDiploma = (String)reader["CertificateDiploma"];
-                        poco.StartDate = (DateTime)reader["StartDate"];
-                        poco.CompletionDate = (DateTime)reader["CompletionDate"];
-                        poco.CompletionPercent = (Byte)reader["CompletionPercent"];
-                        poco.TimeStamp = (Byte[])reader["TimeStamp"];
+                        poco.Company  = (Guid)reader["Company"];
+                        poco.ProfileCreated = (DateTime)reader["Profile_Created"];
+                        poco.IsInactive = (bool)reader["Is_Inactive"];
+                        poco.IsCompanyHidden = (bool)reader["Is_Company_Hidden"];
+                        poco.TimeStamp = (Byte[])reader["Time_Stamp"];
                         arrPoco[recordIndex++] = poco;
                     }
                     return arrPoco.Where(a => a != null).ToList();
@@ -137,8 +128,8 @@ namespace CareerCloud.ADODataAccessLayer
 
         public void Remove(params CompanyJobPoco[] items)
         {
-            _cmdSQL = @"DELETE FROM [dbo].[Applicant_Educations]
-                WHERE Id =@Id)";
+            _cmdSQL = @"DELETE FROM [dbo].[Company_Jobs] 
+                WHERE Id =@Id";
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
@@ -168,15 +159,12 @@ namespace CareerCloud.ADODataAccessLayer
 
         public void Update(params CompanyJobPoco[] items)
         {
-            _cmdSQL = @"UPDATE [dbo].[Applicant_Educations]
-                SET [Id]=@Id,
-                    [Applicant]=@Applicant,
-                    [Major]=@Major,
-                    [Cetificate_Diploma]=@Cetificate_Diploma,
-                    [Start_Date]=@Start_Date,
-                    [Completion_Date]=@Completion_Date,
-                    [Completion_Percent]=@Completion_Percent
-                    Where Id=@Id)";
+            _cmdSQL = @"UPDATE [dbo].[Company_Jobs]
+                SET [Company]=@Company
+               ,[Profile_Created]=@Profile_Created
+               ,[Is_Inactive]=@Is_Inactive
+               ,[Is_Company_Hidden]=@Is_Company_Hidden 
+                WHERE Id=@Id";
 
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {
@@ -189,12 +177,10 @@ namespace CareerCloud.ADODataAccessLayer
                     {
                         CompanyJobPoco oPoco = new CompanyJobPoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
-                        cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
-                        cmd.Parameters.AddWithValue("Major", poco.Major);
-                        cmd.Parameters.AddWithValue("Cetificate_Diploma", poco.CertificateDiploma);
-                        cmd.Parameters.AddWithValue("Start_Date", poco.StartDate);
-                        cmd.Parameters.AddWithValue("Completion_Date", poco.CompletionDate);
-                        cmd.Parameters.AddWithValue("Completion_Percent", poco.CompletionPercent);
+                        cmd.Parameters.AddWithValue("Company", poco.Company);
+                        cmd.Parameters.AddWithValue("Profile_Created", poco.ProfileCreated);
+                        cmd.Parameters.AddWithValue("Is_Inactive", poco.IsInactive);
+                        cmd.Parameters.AddWithValue("Is_Company_Hidden", poco.IsCompanyHidden);
                         con.Open();
                         cmd.ExecuteNonQuery();
                         con.Close();

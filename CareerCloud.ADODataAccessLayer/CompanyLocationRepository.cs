@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using CareerCloud.DataAccessLayer;
 using CareerCloud.Pocos;
 using System.Data.SqlClient;
@@ -16,22 +14,22 @@ namespace CareerCloud.ADODataAccessLayer
         private const int _maxRecordNo = 500;
         public void Add(params CompanyLocationPoco[] items)
         {
-            _cmdSQL = @"INSERT INTO [dbo].[Applicant_Educations]
+            _cmdSQL = @"INSERT INTO [dbo].[Company_Locations]
                ([Id]
-               ,[Applicant]
-               ,[Major]
-               ,[Cetificate_Diploma]
-               ,[Start_Date]
-               ,[Completion_Date]
-               ,[Completion_Percent])
+               ,[Company]
+               ,[Country_Code]
+               ,[State_Province_Code]
+               ,[Street_Address]
+               ,[City_Town]
+               ,[Zip_Postal_Code])
                 VALUES
-               (@Id,
-                @Applicant, 
-                @Major,
-                @Cetificate_Diploma,
-                @Start_Date,
-                @Completion_Date,
-                @Completion_Percent)";
+               (@Id
+               ,@Company
+               ,@Country_Code
+               ,@State_Province_Code
+               ,@Street_Address
+               ,@City_Town
+               ,@Zip_Postal_Code)";
 
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {
@@ -42,19 +40,19 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (CompanyLocationPoco poco in items)
                     {
-                            CompanyLocationPoco oPoco = new CompanyLocationPoco();
-                            cmd.Parameters.AddWithValue("Id", poco.Id);
-                            cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
-                            cmd.Parameters.AddWithValue("Major", poco.Major);
-                            cmd.Parameters.AddWithValue("Cetificate_Diploma", poco.CertificateDiploma);
-                            cmd.Parameters.AddWithValue("Start_Date", poco.StartDate);
-                            cmd.Parameters.AddWithValue("Completion_Date", poco.CompletionDate);
-                            cmd.Parameters.AddWithValue("Completion_Percent", poco.CompletionPercent);
-                            con.Open();
-                            cmd.ExecuteNonQuery();
-                            con.Close();
-                            }
+                        CompanyLocationPoco oPoco = new CompanyLocationPoco();
+                        cmd.Parameters.AddWithValue("Id", poco.Id);
+                        cmd.Parameters.AddWithValue("Company", poco.Company);
+                        cmd.Parameters.AddWithValue("Country_Code", poco.CountryCode);
+                        cmd.Parameters.AddWithValue("State_Province_Code", poco.Province);
+                        cmd.Parameters.AddWithValue("Street_Address", poco.Street);
+                        cmd.Parameters.AddWithValue("City_Town", poco.City);
+                        cmd.Parameters.AddWithValue("Zip_Postal_Code", poco.PostalCode);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
                     }
+                }
                 catch (Exception e)
                 {
                     throw new Exception("CompanyLocationPoco.Add-->Insertion error : " + e.ToString());
@@ -73,15 +71,15 @@ namespace CareerCloud.ADODataAccessLayer
 
         public IList<CompanyLocationPoco> GetAll(params Expression<Func<CompanyLocationPoco, object>>[] navigationProperties)
         {
-            _cmdSQL = @"SELECT[Id]
-              ,[Applicant]
-              ,[Major]
-              ,[Cetificate_Diploma]
-              ,[Start_Date]
-              ,[Completion_Date]
-              ,[Completion_Percent]
-              ,[Time_Stamp]
-                FROM[dbo].[Applicant_Educations]";
+            _cmdSQL = @"SELECT [Id]
+                ,[Company]
+                ,[Country_Code]
+                ,[State_Province_Code]
+                ,[Street_Address]
+                ,[City_Town]
+                ,[Zip_Postal_Code]
+                ,[Time_Stamp] 
+                FROM [dbo].[Company_Locations]";
             using (SqlConnection con = new SqlConnection(DBConnectionString)) 
             {
                 try
@@ -89,19 +87,21 @@ namespace CareerCloud.ADODataAccessLayer
                     CompanyLocationPoco[] arrPoco = new CompanyLocationPoco[_maxRecordNo];
                     SqlCommand cmd = new SqlCommand();
                     cmd.CommandText = _cmdSQL;
+                    cmd.Connection = con;
+                    con.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
                     int recordIndex = 0;
                     while (reader.Read())
                     {
                         CompanyLocationPoco poco = new CompanyLocationPoco();
                         poco.Id = (Guid)reader["Id"];
-                        poco.Applicant = (Guid)reader["Applicant"];
-                        poco.Major = (String)reader["Major"];
-                        poco.CertificateDiploma = (String)reader["CertificateDiploma"];
-                        poco.StartDate = (DateTime)reader["StartDate"];
-                        poco.CompletionDate = (DateTime)reader["CompletionDate"];
-                        poco.CompletionPercent = (Byte)reader["CompletionPercent"];
-                        poco.TimeStamp = (Byte[])reader["TimeStamp"];
+                        poco.Company = (Guid)reader["Company"];
+                        poco.CountryCode = (String)reader["Country_Code"];
+                        poco.Province = (String)reader["State_Province_Code"];
+                        poco.Street = (String)reader["Street_Address"];
+                        poco.City = (String)reader["City_Town"];
+                        poco.PostalCode = (String)reader["Zip_Postal_Code"];
+                        poco.TimeStamp = (Byte[])reader["Time_Stamp"];
                         arrPoco[recordIndex++] = poco;
                     }
                     return arrPoco.Where(a => a != null).ToList();
@@ -137,8 +137,8 @@ namespace CareerCloud.ADODataAccessLayer
 
         public void Remove(params CompanyLocationPoco[] items)
         {
-            _cmdSQL = @"DELETE FROM [dbo].[Applicant_Educations]
-                WHERE Id =@Id)";
+            _cmdSQL = @"DELETE FROM [dbo].[Company_Locations] 
+                WHERE Id =@Id";
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
@@ -168,15 +168,14 @@ namespace CareerCloud.ADODataAccessLayer
 
         public void Update(params CompanyLocationPoco[] items)
         {
-            _cmdSQL = @"UPDATE [dbo].[Applicant_Educations]
-                SET [Id]=@Id,
-                    [Applicant]=@Applicant,
-                    [Major]=@Major,
-                    [Cetificate_Diploma]=@Cetificate_Diploma,
-                    [Start_Date]=@Start_Date,
-                    [Completion_Date]=@Completion_Date,
-                    [Completion_Percent]=@Completion_Percent
-                    Where Id=@Id)";
+            _cmdSQL = @"UPDATE [dbo].[Company_Locations] 
+                SET [Company]=@Company
+               ,[Country_Code]=@Country_Code
+               ,[State_Province_Code]=@State_Province_Code
+               ,[Street_Address]=@Street_Address
+               ,[City_Town]=@City_Town
+               ,[Zip_Postal_Code]=Zip_Postal_Code 
+               WHERE Id=@Id";
 
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {
@@ -189,12 +188,12 @@ namespace CareerCloud.ADODataAccessLayer
                     {
                         CompanyLocationPoco oPoco = new CompanyLocationPoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
-                        cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
-                        cmd.Parameters.AddWithValue("Major", poco.Major);
-                        cmd.Parameters.AddWithValue("Cetificate_Diploma", poco.CertificateDiploma);
-                        cmd.Parameters.AddWithValue("Start_Date", poco.StartDate);
-                        cmd.Parameters.AddWithValue("Completion_Date", poco.CompletionDate);
-                        cmd.Parameters.AddWithValue("Completion_Percent", poco.CompletionPercent);
+                        cmd.Parameters.AddWithValue("Company", poco.Company);
+                        cmd.Parameters.AddWithValue("Country_Code", poco.CountryCode);
+                        cmd.Parameters.AddWithValue("State_Province_Code", poco.Province);
+                        cmd.Parameters.AddWithValue("Street_Address", poco.Street);
+                        cmd.Parameters.AddWithValue("City_Town", poco.City);
+                        cmd.Parameters.AddWithValue("Zip_Postal_Code", poco.PostalCode);
                         con.Open();
                         cmd.ExecuteNonQuery();
                         con.Close();

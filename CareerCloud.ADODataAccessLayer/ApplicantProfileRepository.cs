@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using CareerCloud.DataAccessLayer;
 using CareerCloud.Pocos;
 using System.Data.SqlClient;
@@ -30,8 +28,8 @@ namespace CareerCloud.ADODataAccessLayer
                         VALUES
                        (@Id
                        ,@Login
-                       ,@Current_Salary>
-                       ,@Current_Rate>
+                       ,@Current_Salary
+                       ,@Current_Rate
                        ,@Currency
                        ,@Country_Code
                        ,@State_Province_Code
@@ -92,7 +90,7 @@ namespace CareerCloud.ADODataAccessLayer
               ,[Street_Address]
               ,[City_Town]
               ,[Zip_Postal_Code]
-              ,[Time_Stamp]
+              ,[Time_Stamp] 
               FROM [dbo].[Applicant_Profiles]";
             using (SqlConnection con = new SqlConnection(DBConnectionString)) 
             {
@@ -101,6 +99,8 @@ namespace CareerCloud.ADODataAccessLayer
                     ApplicantProfilePoco[] arrPoco = new ApplicantProfilePoco[_maxRecordNo];
                     SqlCommand cmd = new SqlCommand();
                     cmd.CommandText = _cmdSQL;
+                    cmd.Connection = con;
+                    con.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
                     int recordIndex = 0;
                     while (reader.Read())
@@ -151,8 +151,8 @@ namespace CareerCloud.ADODataAccessLayer
 
         public void Remove(params ApplicantProfilePoco[] items)
         {
-            _cmdSQL = @"DELETE FROM [dbo].[[Applicant_Profiles]
-                WHERE Id =@Id)";
+            _cmdSQL = @"DELETE FROM [dbo].[Applicant_Profiles] 
+                WHERE Id =@Id";
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
@@ -182,7 +182,7 @@ namespace CareerCloud.ADODataAccessLayer
 
         public void Update(params ApplicantProfilePoco[] items)
         {
-            _cmdSQL = @"UPDATE [dbo].[[Applicant_Profiles]
+            _cmdSQL = @"UPDATE [dbo].[Applicant_Profiles]
                 SET [Login]=@Login
                 ,[Current_Salary]=@Current_Salary
                 ,[Current_Rate]=@Current_Rate
@@ -191,8 +191,8 @@ namespace CareerCloud.ADODataAccessLayer
                 ,[State_Province_Code]=@State_Province_Code
                 ,[Street_Address]=@Street_Address
                 ,[City_Town]=@City_Town
-                ,[Zip_Postal_Code]=@Zip_Postal_Code
-                WHERE Id=@Id)";
+                ,[Zip_Postal_Code]=@Zip_Postal_Code 
+                WHERE Id=@Id";
 
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {

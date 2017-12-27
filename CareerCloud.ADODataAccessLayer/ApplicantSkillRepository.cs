@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using CareerCloud.DataAccessLayer;
 using CareerCloud.Pocos;
 using System.Data.SqlClient;
@@ -52,7 +50,7 @@ namespace CareerCloud.ADODataAccessLayer
                         cmd.Parameters.AddWithValue("Start_Month", poco.StartMonth);
                         cmd.Parameters.AddWithValue("Start_Year", poco.StartYear);
                         cmd.Parameters.AddWithValue("End_Month", poco.EndMonth);
-                        cmd.Parameters.AddWithValue("End_Month", poco.EndYear);
+                        cmd.Parameters.AddWithValue("End_Year", poco.EndYear);
                         con.Open();
                         cmd.ExecuteNonQuery();
                         con.Close();
@@ -84,7 +82,7 @@ namespace CareerCloud.ADODataAccessLayer
               ,[Start_Year]
               ,[End_Month]
               ,[End_Year]
-              ,[Time_Stamp]
+              ,[Time_Stamp] 
                FROM [dbo].[Applicant_Skills]";
             using (SqlConnection con = new SqlConnection(DBConnectionString)) 
             {
@@ -93,6 +91,8 @@ namespace CareerCloud.ADODataAccessLayer
                     ApplicantSkillPoco[] arrPoco = new ApplicantSkillPoco[_maxRecordNo];
                     SqlCommand cmd = new SqlCommand();
                     cmd.CommandText = _cmdSQL;
+                    cmd.Connection = con;
+                    con.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
                     int recordIndex = 0;
                     while (reader.Read())
@@ -106,7 +106,7 @@ namespace CareerCloud.ADODataAccessLayer
                         poco.StartYear = (int)reader["Start_Year"];
                         poco.EndMonth = (Byte)reader["End_Month"];
                         poco.EndYear = (int)reader["End_Year"];
-                        poco.TimeStamp = (Byte[])reader["TimeStamp"];
+                        poco.TimeStamp = (Byte[])reader["Time_Stamp"];
                         arrPoco[recordIndex++] = poco;
                     }
                     return arrPoco.Where(a => a != null).ToList();
@@ -142,8 +142,8 @@ namespace CareerCloud.ADODataAccessLayer
 
         public void Remove(params ApplicantSkillPoco[] items)
         {
-            _cmdSQL = @"DELETE FROM [dbo].[Applicant_Skills]
-                WHERE Id =@Id)";
+            _cmdSQL = @"DELETE FROM [dbo].[Applicant_Skills] 
+                WHERE Id =@Id";
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
@@ -180,8 +180,8 @@ namespace CareerCloud.ADODataAccessLayer
                ,[Start_Month]=@Start_Month
                ,[Start_Year]=@Start_Year
                ,[End_Month]=@End_Month
-               ,[End_Year]=@End_Year
-               WHERE Id=@Id)";
+               ,[End_Year]=@End_Year 
+               WHERE Id=@Id";
 
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {

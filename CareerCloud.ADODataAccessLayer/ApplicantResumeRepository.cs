@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using CareerCloud.DataAccessLayer;
 using CareerCloud.Pocos;
 using System.Data.SqlClient;
@@ -21,7 +19,7 @@ namespace CareerCloud.ADODataAccessLayer
                ,[Applicant]
                ,[Resume])
                VALUES
-               (@Id>
+               (@Id
                ,@Applicant
                ,@Resume)";
 
@@ -63,7 +61,7 @@ namespace CareerCloud.ADODataAccessLayer
         {
             _cmdSQL = @"SELECT [Id]
                 ,[Applicant]
-                ,[Resume]
+                ,[Resume] 
                 FROM [dbo].[Applicant_Resumes]";
 
             using (SqlConnection con = new SqlConnection(DBConnectionString)) 
@@ -73,6 +71,8 @@ namespace CareerCloud.ADODataAccessLayer
                     ApplicantResumePoco[] arrPoco = new ApplicantResumePoco[_maxRecordNo];
                     SqlCommand cmd = new SqlCommand();
                     cmd.CommandText = _cmdSQL;
+                    cmd.Connection = con;
+                    con.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
                     int recordIndex = 0;
                     while (reader.Read())
@@ -116,8 +116,8 @@ namespace CareerCloud.ADODataAccessLayer
 
         public void Remove(params ApplicantResumePoco[] items)
         {
-            _cmdSQL = @"DELETE FROM [dbo].[Applicant_Resumes]
-                WHERE Id =@Id)";
+            _cmdSQL = @"DELETE FROM [dbo].[Applicant_Resumes] 
+                WHERE Id =@Id";
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
@@ -147,10 +147,10 @@ namespace CareerCloud.ADODataAccessLayer
 
         public void Update(params ApplicantResumePoco[] items)
         {
-            _cmdSQL = @"UPDATE [dbo].[Applicant_Resumes]
+            _cmdSQL = @"UPDATE [dbo].[Applicant_Resumes] 
                 SET [Applicant]=@Applicant,
-                    [Resume]=@Resume
-                    Where Id=@Id)";
+                [Resume]=@Resume 
+                WHERE Id=@Id";
 
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {

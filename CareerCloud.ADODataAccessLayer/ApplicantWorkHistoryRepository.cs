@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using CareerCloud.DataAccessLayer;
 using CareerCloud.Pocos;
 using System.Data.SqlClient;
@@ -16,7 +14,7 @@ namespace CareerCloud.ADODataAccessLayer
         private const int _maxRecordNo = 500;
         public void Add(params ApplicantWorkHistoryPoco[] items)
         {
-            _cmdSQL = @"INSERT INTO [dbo].[Applicant_Work_History]
+            _cmdSQL = @"INSERT INTO [dbo].[Applicant_Work_History] 
                ([Id]
                ,[Applicant]
                ,[Company_Name]
@@ -96,7 +94,7 @@ namespace CareerCloud.ADODataAccessLayer
               ,[Start_Year]
               ,[End_Month]
               ,[End_Year]
-              ,[Time_Stamp]
+              ,[Time_Stamp] 
               FROM [dbo].[Applicant_Work_History]";
             using (SqlConnection con = new SqlConnection(DBConnectionString)) 
             {
@@ -105,6 +103,8 @@ namespace CareerCloud.ADODataAccessLayer
                     ApplicantWorkHistoryPoco[] arrPoco = new ApplicantWorkHistoryPoco[_maxRecordNo];
                     SqlCommand cmd = new SqlCommand();
                     cmd.CommandText = _cmdSQL;
+                    cmd.Connection = con;
+                    con.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
                     int recordIndex = 0;
                     while (reader.Read())
@@ -157,8 +157,8 @@ namespace CareerCloud.ADODataAccessLayer
 
         public void Remove(params ApplicantWorkHistoryPoco[] items)
         {
-            _cmdSQL = @"DELETE FROM [dbo].[Applicant_Work_History]
-                WHERE Id =@Id)";
+            _cmdSQL = @"DELETE FROM [dbo].[Applicant_Work_History] 
+                WHERE Id =@Id";
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
@@ -188,7 +188,7 @@ namespace CareerCloud.ADODataAccessLayer
 
         public void Update(params ApplicantWorkHistoryPoco[] items)
         {
-            _cmdSQL = @"UPDATE [dbo].[[Applicant_Work_History]]
+            _cmdSQL = @"UPDATE [dbo].[Applicant_Work_History]
                 SET [Applicant]=@Applicant
                ,[Company_Name]=@Company_Name
                ,[Country_Code]=@Country_Code
@@ -198,8 +198,8 @@ namespace CareerCloud.ADODataAccessLayer
                ,[Start_Month]=@Start_Month
                ,[Start_Year]=@Start_Year
                ,[End_Month]=@End_Month
-               ,[End_Year]=@End_Year
-               WHERE Id=@Id)";
+               ,[End_Year]=@End_Year 
+               WHERE Id=@Id";
 
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using CareerCloud.DataAccessLayer;
 using CareerCloud.Pocos;
 using System.Data.SqlClient;
@@ -22,9 +20,9 @@ namespace CareerCloud.ADODataAccessLayer
                ,[Job]
                ,[Application_Date])
                 VALUES
-               (@Id,
-               ,@Applicant, 
-               ,@Job,
+               (@Id
+               ,@Applicant
+               ,@Job
                ,@Application_Date)";
 
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
@@ -68,7 +66,7 @@ namespace CareerCloud.ADODataAccessLayer
                 ,[Applicant]
                 ,[Job]
                 ,[Application_Date]
-                ,[Time_Stamp]
+                ,[Time_Stamp] 
                 FROM [dbo].[Applicant_Job_Applications]";
             using (SqlConnection con = new SqlConnection(DBConnectionString)) 
             {
@@ -77,6 +75,8 @@ namespace CareerCloud.ADODataAccessLayer
                     ApplicantJobApplicationPoco[] arrPoco = new ApplicantJobApplicationPoco[_maxRecordNo];
                     SqlCommand cmd = new SqlCommand();
                     cmd.CommandText = _cmdSQL;
+                    cmd.Connection = con;
+                    con.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
                     int recordIndex = 0;
                     while (reader.Read())
@@ -122,8 +122,8 @@ namespace CareerCloud.ADODataAccessLayer
 
         public void Remove(params ApplicantJobApplicationPoco[] items)
         {
-            _cmdSQL = @"DELETE FROM [dbo].[Applicant_Job_Applications]
-                WHERE Id =@Id)";
+            _cmdSQL = @"DELETE FROM [dbo].[Applicant_Job_Applications] 
+                WHERE Id =@Id";
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
@@ -153,7 +153,7 @@ namespace CareerCloud.ADODataAccessLayer
 
         public void Update(params ApplicantJobApplicationPoco[] items)
         {
-            _cmdSQL = @"UPDATE [dbo].[Applicant_Job_Applications]
+            _cmdSQL = @"UPDATE [dbo].[Applicant_Job_Applications] 
                 SET [Applicant] = @Applicant
                 ,[Job] = @Job
                 ,[Application_Date] = @Application_Date";
@@ -171,7 +171,7 @@ namespace CareerCloud.ADODataAccessLayer
                         ApplicantJobApplicationPoco oPoco = new ApplicantJobApplicationPoco();
                         cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
                         cmd.Parameters.AddWithValue("Job", poco.Job);
-                        cmd.Parameters.AddWithValue("Applicatin_Date", poco.ApplicationDate);
+                        cmd.Parameters.AddWithValue("Application_Date", poco.ApplicationDate);
                         con.Open();
                         cmd.ExecuteNonQuery();
                         con.Close();

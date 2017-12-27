@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using CareerCloud.DataAccessLayer;
 using CareerCloud.Pocos;
 using System.Data.SqlClient;
@@ -16,22 +14,18 @@ namespace CareerCloud.ADODataAccessLayer
         private const int _maxRecordNo = 500;
         public void Add(params CompanyJobSkillPoco[] items)
         {
-            _cmdSQL = @"INSERT INTO [dbo].[Applicant_Educations]
+            _cmdSQL = @"INSERT INTO [dbo].[Company_Job_Skills] 
                ([Id]
-               ,[Applicant]
-               ,[Major]
-               ,[Cetificate_Diploma]
-               ,[Start_Date]
-               ,[Completion_Date]
-               ,[Completion_Percent])
+               ,[Job]
+               ,[Skill]
+               ,[Skill_Level]
+               ,[Importance])
                 VALUES
-               (@Id,
-                @Applicant, 
-                @Major,
-                @Cetificate_Diploma,
-                @Start_Date,
-                @Completion_Date,
-                @Completion_Percent)";
+               (@Id
+               ,@Job
+               ,@Skill
+               ,@Skill_Level
+               ,@Importance)";
 
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {
@@ -42,19 +36,17 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (CompanyJobSkillPoco poco in items)
                     {
-                            CompanyJobSkillPoco oPoco = new CompanyJobSkillPoco();
-                            cmd.Parameters.AddWithValue("Id", poco.Id);
-                            cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
-                            cmd.Parameters.AddWithValue("Major", poco.Major);
-                            cmd.Parameters.AddWithValue("Cetificate_Diploma", poco.CertificateDiploma);
-                            cmd.Parameters.AddWithValue("Start_Date", poco.StartDate);
-                            cmd.Parameters.AddWithValue("Completion_Date", poco.CompletionDate);
-                            cmd.Parameters.AddWithValue("Completion_Percent", poco.CompletionPercent);
-                            con.Open();
-                            cmd.ExecuteNonQuery();
-                            con.Close();
-                            }
+                        CompanyJobSkillPoco oPoco = new CompanyJobSkillPoco();
+                        cmd.Parameters.AddWithValue("Id", poco.Id);
+                        cmd.Parameters.AddWithValue("Job", poco.Job);
+                        cmd.Parameters.AddWithValue("Skill", poco.Skill);
+                        cmd.Parameters.AddWithValue("Skill_Level", poco.SkillLevel);
+                        cmd.Parameters.AddWithValue("Importance", poco.Importance);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
                     }
+                }
                 catch (Exception e)
                 {
                     throw new Exception("CompanyJobSkillPoco.Add-->Insertion error : " + e.ToString());
@@ -73,15 +65,13 @@ namespace CareerCloud.ADODataAccessLayer
 
         public IList<CompanyJobSkillPoco> GetAll(params Expression<Func<CompanyJobSkillPoco, object>>[] navigationProperties)
         {
-            _cmdSQL = @"SELECT[Id]
-              ,[Applicant]
-              ,[Major]
-              ,[Cetificate_Diploma]
-              ,[Start_Date]
-              ,[Completion_Date]
-              ,[Completion_Percent]
-              ,[Time_Stamp]
-                FROM[dbo].[Applicant_Educations]";
+            _cmdSQL = @"SELECT [Id]
+              ,[Job]
+              ,[Skill]
+              ,[Skill_Level]
+              ,[Importance]
+              ,[Time_Stamp] 
+              FROM [dbo].[Company_Job_Skills]";
             using (SqlConnection con = new SqlConnection(DBConnectionString)) 
             {
                 try
@@ -89,19 +79,19 @@ namespace CareerCloud.ADODataAccessLayer
                     CompanyJobSkillPoco[] arrPoco = new CompanyJobSkillPoco[_maxRecordNo];
                     SqlCommand cmd = new SqlCommand();
                     cmd.CommandText = _cmdSQL;
+                    cmd.Connection = con;
+                    con.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
                     int recordIndex = 0;
                     while (reader.Read())
                     {
                         CompanyJobSkillPoco poco = new CompanyJobSkillPoco();
                         poco.Id = (Guid)reader["Id"];
-                        poco.Applicant = (Guid)reader["Applicant"];
-                        poco.Major = (String)reader["Major"];
-                        poco.CertificateDiploma = (String)reader["CertificateDiploma"];
-                        poco.StartDate = (DateTime)reader["StartDate"];
-                        poco.CompletionDate = (DateTime)reader["CompletionDate"];
-                        poco.CompletionPercent = (Byte)reader["CompletionPercent"];
-                        poco.TimeStamp = (Byte[])reader["TimeStamp"];
+                        poco.Job = (Guid)reader["Job"];
+                        poco.Skill= (String)reader["Skill"];
+                        poco.SkillLevel= (String)reader["Skill_Level"];
+                        poco.Importance = (int)reader["Importance"];
+                        poco.TimeStamp = (Byte[])reader["Time_Stamp"];
                         arrPoco[recordIndex++] = poco;
                     }
                     return arrPoco.Where(a => a != null).ToList();
@@ -137,8 +127,8 @@ namespace CareerCloud.ADODataAccessLayer
 
         public void Remove(params CompanyJobSkillPoco[] items)
         {
-            _cmdSQL = @"DELETE FROM [dbo].[Applicant_Educations]
-                WHERE Id =@Id)";
+            _cmdSQL = @"DELETE FROM [dbo].[SCompany_Job_Skills] 
+                WHERE Id =@Id";
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
@@ -168,15 +158,12 @@ namespace CareerCloud.ADODataAccessLayer
 
         public void Update(params CompanyJobSkillPoco[] items)
         {
-            _cmdSQL = @"UPDATE [dbo].[Applicant_Educations]
-                SET [Id]=@Id,
-                    [Applicant]=@Applicant,
-                    [Major]=@Major,
-                    [Cetificate_Diploma]=@Cetificate_Diploma,
-                    [Start_Date]=@Start_Date,
-                    [Completion_Date]=@Completion_Date,
-                    [Completion_Percent]=@Completion_Percent
-                    Where Id=@Id)";
+            _cmdSQL = @"UPDATE [dbo].[Company_Job_Skills] 
+                SET [Job]=@Job
+               ,[Skill]=@Skill
+               ,[Skill_Level]=@Skill_Level
+               ,[Importance]=@Importance 
+               WHERE Id=@Id";
 
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {
@@ -189,12 +176,10 @@ namespace CareerCloud.ADODataAccessLayer
                     {
                         CompanyJobSkillPoco oPoco = new CompanyJobSkillPoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
-                        cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
-                        cmd.Parameters.AddWithValue("Major", poco.Major);
-                        cmd.Parameters.AddWithValue("Cetificate_Diploma", poco.CertificateDiploma);
-                        cmd.Parameters.AddWithValue("Start_Date", poco.StartDate);
-                        cmd.Parameters.AddWithValue("Completion_Date", poco.CompletionDate);
-                        cmd.Parameters.AddWithValue("Completion_Percent", poco.CompletionPercent);
+                        cmd.Parameters.AddWithValue("Job", poco.Job);
+                        cmd.Parameters.AddWithValue("Skill", poco.Skill);
+                        cmd.Parameters.AddWithValue("Skill_Level", poco.SkillLevel);
+                        cmd.Parameters.AddWithValue("Importance", poco.Importance);
                         con.Open();
                         cmd.ExecuteNonQuery();
                         con.Close();

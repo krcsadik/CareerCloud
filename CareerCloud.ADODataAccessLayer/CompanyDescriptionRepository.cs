@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using CareerCloud.DataAccessLayer;
 using CareerCloud.Pocos;
 using System.Data.SqlClient;
@@ -16,14 +14,14 @@ namespace CareerCloud.ADODataAccessLayer
         private const int _maxRecordNo = 500;
         public void Add(params CompanyDescriptionPoco[] items)
         {
-            _cmdSQL = @"INSERT INTO [dbo].[Company_Descriptions]
+            _cmdSQL = @"INSERT INTO [dbo].[Company_Descriptions] 
                ([Id]
                ,[Company]
                ,[LanguageID]
                ,[Company_Name]
                ,[Company_Description])
                 VALUES
-               (@Id>
+               (@Id
                ,@Company
                ,@LanguageID
                ,@Company_Name
@@ -72,7 +70,7 @@ namespace CareerCloud.ADODataAccessLayer
               ,[LanguageID]
               ,[Company_Name]
               ,[Company_Description]
-              ,[Time_Stamp]
+              ,[Time_Stamp] 
                FROM [dbo].[Company_Descriptions]";
             using (SqlConnection con = new SqlConnection(DBConnectionString)) 
             {
@@ -81,6 +79,8 @@ namespace CareerCloud.ADODataAccessLayer
                     CompanyDescriptionPoco[] arrPoco = new CompanyDescriptionPoco[_maxRecordNo];
                     SqlCommand cmd = new SqlCommand();
                     cmd.CommandText = _cmdSQL;
+                    cmd.Connection = con;
+                    con.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
                     int recordIndex = 0;
                     while (reader.Read())
@@ -90,7 +90,7 @@ namespace CareerCloud.ADODataAccessLayer
                         poco.LanguageId = (String)reader["LanguageID"];
                         poco.CompanyName = (String)reader["Company_Name"];
                         poco.CompanyDescription= (String)reader["Company_Description"];
-                        poco.TimeStamp = (Byte[])reader["TimeStamp"];
+                        poco.TimeStamp = (Byte[])reader["Time_Stamp"];
                         arrPoco[recordIndex++] = poco;
                     }
                     return arrPoco.Where(a => a != null).ToList();
@@ -126,8 +126,8 @@ namespace CareerCloud.ADODataAccessLayer
 
         public void Remove(params CompanyDescriptionPoco[] items)
         {
-            _cmdSQL = @"DELETE FROM [dbo].[Company_Descriptions]
-                WHERE Id =@Id)";
+            _cmdSQL = @"DELETE FROM [dbo].[Company_Descriptions] 
+                WHERE Id =@Id";
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
@@ -161,8 +161,8 @@ namespace CareerCloud.ADODataAccessLayer
                SET [Company]=@Company
                ,[LanguageID]=@LanguageID
                ,[Company_Name]=@Company_Name
-               ,[Company_Description]=@Company_Description
-               WHERE Id=@Id)";
+               ,[Company_Description]=@Company_Description 
+               WHERE Id=@Id";
 
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {
