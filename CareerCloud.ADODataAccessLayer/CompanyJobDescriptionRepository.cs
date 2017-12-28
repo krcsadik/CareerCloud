@@ -34,16 +34,15 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (CompanyJobDescriptionPoco poco in items)
                     {
-                            CompanyJobDescriptionPoco oPoco = new CompanyJobDescriptionPoco();
-                            cmd.Parameters.AddWithValue("Id", poco.Id);
-                            cmd.Parameters.AddWithValue("Job", poco.Job);
-                            cmd.Parameters.AddWithValue("Job_Name", poco.JobName);
-                            cmd.Parameters.AddWithValue("Job_Descriptions", poco.JobDescriptions);
-                            con.Open();
-                            cmd.ExecuteNonQuery();
-                            con.Close();
-                            }
+                        cmd.Parameters.AddWithValue("Id", poco.Id);
+                        cmd.Parameters.AddWithValue("Job", poco.Job);
+                        cmd.Parameters.AddWithValue("Job_Name", poco.JobName);
+                        cmd.Parameters.AddWithValue("Job_Descriptions", poco.JobDescriptions);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
                     }
+                }
                 catch (Exception e)
                 {
                     throw new Exception("CompanyJobDescriptionPoco.Add-->Insertion error : " + e.ToString());
@@ -169,7 +168,6 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (CompanyJobDescriptionPoco poco in items)
                     {
-                        CompanyJobDescriptionPoco oPoco = new CompanyJobDescriptionPoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Job", poco.Job);
                         cmd.Parameters.AddWithValue("Job_Name", poco.JobName);

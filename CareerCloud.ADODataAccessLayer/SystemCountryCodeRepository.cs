@@ -30,7 +30,6 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (SystemCountryCodePoco poco in items)
                     {
-                        SystemCountryCodePoco oPoco = new SystemCountryCodePoco();
                         cmd.Parameters.AddWithValue("Code", poco.Code);
                         cmd.Parameters.AddWithValue("Name", poco.Name);
                         con.Open();

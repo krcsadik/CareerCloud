@@ -40,7 +40,6 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (CompanyLocationPoco poco in items)
                     {
-                        CompanyLocationPoco oPoco = new CompanyLocationPoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Company", poco.Company);
                         cmd.Parameters.AddWithValue("Country_Code", poco.CountryCode);
@@ -174,7 +173,7 @@ namespace CareerCloud.ADODataAccessLayer
                ,[State_Province_Code]=@State_Province_Code
                ,[Street_Address]=@Street_Address
                ,[City_Town]=@City_Town
-               ,[Zip_Postal_Code]=Zip_Postal_Code 
+               ,[Zip_Postal_Code]=@Zip_Postal_Code 
                WHERE Id=@Id";
 
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
@@ -186,7 +185,6 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (CompanyLocationPoco poco in items)
                     {
-                        CompanyLocationPoco oPoco = new CompanyLocationPoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Company", poco.Company);
                         cmd.Parameters.AddWithValue("Country_Code", poco.CountryCode);

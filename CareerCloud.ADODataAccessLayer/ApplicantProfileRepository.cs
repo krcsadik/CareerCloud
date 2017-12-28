@@ -46,7 +46,6 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (ApplicantProfilePoco poco in items)
                     {
-                        ApplicantProfilePoco oPoco = new ApplicantProfilePoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Login", poco.Login);
                         cmd.Parameters.AddWithValue("Current_Salary", poco.CurrentSalary);
@@ -114,6 +113,7 @@ namespace CareerCloud.ADODataAccessLayer
                         poco.Country = (String)reader["Country_Code"];
                         poco.Province = (String)reader["State_Province_Code"];
                         poco.Street = (String)reader["Street_Address"];
+                        poco.City= (String)reader["City_Town"];
                         poco.PostalCode = (String)reader["Zip_Postal_Code"];
                         poco.TimeStamp = (Byte[])reader["Time_Stamp"];
                         arrPoco[recordIndex++] = poco;
@@ -203,7 +203,6 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (ApplicantProfilePoco poco in items)
                     {
-                        ApplicantProfilePoco oPoco = new ApplicantProfilePoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Login", poco.Login);
                         cmd.Parameters.AddWithValue("Current_Salary", poco.CurrentSalary);

@@ -32,15 +32,14 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (ApplicantResumePoco poco in items)
                     {
-                            ApplicantResumePoco oPoco = new ApplicantResumePoco();
-                            cmd.Parameters.AddWithValue("Id", poco.Id);
-                            cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
-                            cmd.Parameters.AddWithValue("Resume", poco.Resume);
-                            con.Open();
-                            cmd.ExecuteNonQuery();
-                            con.Close();
-                            }
+                        cmd.Parameters.AddWithValue("Id", poco.Id);
+                        cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
+                        cmd.Parameters.AddWithValue("Resume", poco.Resume);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
                     }
+                }
                 catch (Exception e)
                 {
                     throw new Exception("ApplicantResumePoco.Add-->Insertion error : " + e.ToString());
@@ -161,7 +160,6 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (ApplicantResumePoco poco in items)
                     {
-                        ApplicantResumePoco oPoco = new ApplicantResumePoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
                         cmd.Parameters.AddWithValue("Resume", poco.Resume);

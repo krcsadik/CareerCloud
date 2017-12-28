@@ -18,7 +18,6 @@ namespace CareerCloud.ADODataAccessLayer
                ([Id]
                ,[Login]
                ,[Password]
-               ,[Salt]
                ,[Created_Date]
                ,[Password_Update_Dated]
                ,[Agreement_Accepted_Date]
@@ -33,7 +32,6 @@ namespace CareerCloud.ADODataAccessLayer
                (@Id
                ,@Login
                ,@Password
-               ,@Salt
                ,@Created_Date
                ,@Password_Update_Dated
                ,@Agreement_Accepted_Date
@@ -54,11 +52,10 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (SecurityLoginPoco poco in items)
                     {
-                        SecurityLoginPoco oPoco = new SecurityLoginPoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Login", poco.Login);
                         cmd.Parameters.AddWithValue("Password", poco.Password);
-                        cmd.Parameters.AddWithValue("Salt", poco.Salt);
+                        //cmd.Parameters.AddWithValue("Salt", poco.Salt);
                         cmd.Parameters.AddWithValue("Created_Date", poco.Created);
                         cmd.Parameters.AddWithValue("Password_Update_Dated", poco.PasswordUpdate);
                         cmd.Parameters.AddWithValue("Agreement_Accepted_Date", poco.AgreementAccepted);
@@ -96,9 +93,9 @@ namespace CareerCloud.ADODataAccessLayer
               ,[Login]
               ,[Password]
               ,[Salt]
-              ,[Created_Date]
-              ,[Password_Update_Dated]
-              ,[Agreement_Accepted_Date]
+              ,TRY_CONVERT(datetime2, [Created_Date]) AS Created_Date
+              ,TRY_CONVERT(datetime2, [Password_Update_Dated]) AS Password_Update_Dated
+              ,TRY_CONVERT(datetime2, [Agreement_Accepted_Date]) AS Agreement_Accepted_Date
               ,[Is_Locked]
               ,[Is_Inactive]
               ,[Email_Address]
@@ -125,17 +122,17 @@ namespace CareerCloud.ADODataAccessLayer
                         poco.Id = (Guid)reader["Id"];
                         poco.Login = (String)reader["Login"];
                         poco.Password = (String)reader["Password"];
-                        poco.Salt = (String)reader["Salt"];
-                        poco.Created = (DateTime)reader["Created_Date"];
-                        poco.PasswordUpdate = (DateTime?)reader["Password_Update_Dated"];
-                        poco.AgreementAccepted = (DateTime?)reader["Agreement_Accepted_Date"];
+                        if (!reader.IsDBNull(3)) poco.Salt = (String)reader["Salt"];
+                        if (!reader.IsDBNull(4)) poco.Created = (DateTime)reader["Created_Date"];
+                        if (!reader.IsDBNull(5)) poco.PasswordUpdate=(DateTime?)reader["Password_Update_Dated"];
+                        if (!reader.IsDBNull(6)) poco.AgreementAccepted = (DateTime?)reader["Agreement_Accepted_Date"];
                         poco.IsLocked = (bool)reader["Is_Locked"];
                         poco.IsInactive= (bool)reader["Is_Inactive"];
-                        poco.EmailAddress = (String)reader["Email_Address"];
-                        poco.PhoneNumber= (String)reader["Phone_Number"];
-                        poco.FullName = (String)reader["Full_Name"];
-                        poco.ForceChangePassword = (bool)reader["Force_Change_Password"];
-                        poco.PrefferredLanguage = (String)reader["Prefferred_Language"];
+                        if (!reader.IsDBNull(9)) poco.EmailAddress = (String)reader["Email_Address"];
+                        if (!reader.IsDBNull(10)) poco.PhoneNumber = (String)reader["Phone_Number"];
+                        if (!reader.IsDBNull(11)) poco.FullName = (String)reader["Full_Name"];
+                        if (!reader.IsDBNull(12)) poco.ForceChangePassword = (bool)reader["Force_Change_Password"];
+                        if (!reader.IsDBNull(13)) poco.PrefferredLanguage = (String)reader["Prefferred_Language"];
                         poco.TimeStamp = (Byte[])reader["Time_Stamp"];
                         arrPoco[recordIndex++] = poco;
                     }
@@ -228,7 +225,6 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (SecurityLoginPoco poco in items)
                     {
-                        SecurityLoginPoco oPoco = new SecurityLoginPoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Login", poco.Login);
                         cmd.Parameters.AddWithValue("Password", poco.Password);

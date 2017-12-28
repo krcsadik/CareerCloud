@@ -36,7 +36,6 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (SecurityLoginsLogPoco poco in items)
                     {
-                        SecurityLoginsLogPoco oPoco = new SecurityLoginsLogPoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Login", poco.Login);
                         cmd.Parameters.AddWithValue("Source_IP", poco.SourceIP);
@@ -157,8 +156,7 @@ namespace CareerCloud.ADODataAccessLayer
         public void Update(params SecurityLoginsLogPoco[] items)
         {
             _cmdSQL = @"UPDATE [dbo].[Security_Logins_Log] 
-                SET [Id]
-               ,[Login]=@Login
+                SET [Login]=@Login
                ,[Source_IP]=@Source_IP
                ,[Logon_Date]=@Logon_Date
                ,[Is_Succesful]=@Is_Succesful 
@@ -173,7 +171,6 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (SecurityLoginsLogPoco poco in items)
                     {
-                        SecurityLoginsLogPoco oPoco = new SecurityLoginsLogPoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Login", poco.Login);
                         cmd.Parameters.AddWithValue("Source_IP", poco.SourceIP);

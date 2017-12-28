@@ -32,7 +32,6 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (SystemLanguageCodePoco poco in items)
                     {
-                        SystemLanguageCodePoco oPoco = new SystemLanguageCodePoco();
                         cmd.Parameters.AddWithValue("LanguageID", poco.LanguageID);
                         cmd.Parameters.AddWithValue("Name", poco.Name);
                         cmd.Parameters.AddWithValue("Native_Name", poco.NativeName);
@@ -160,7 +159,6 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (SystemLanguageCodePoco poco in items)
                     {
-                        SystemLanguageCodePoco oPoco = new SystemLanguageCodePoco();
                         cmd.Parameters.AddWithValue("LanguageID", poco.LanguageID);
                         cmd.Parameters.AddWithValue("Name", poco.Name);
                         cmd.Parameters.AddWithValue("Native_Name", poco.NativeName);

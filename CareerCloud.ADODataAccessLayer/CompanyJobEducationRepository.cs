@@ -34,7 +34,6 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (CompanyJobEducationPoco poco in items)
                     {
-                        CompanyJobEducationPoco oPoco = new CompanyJobEducationPoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("job", poco.Job);
                         cmd.Parameters.AddWithValue("Major", poco.Major);
@@ -65,8 +64,8 @@ namespace CareerCloud.ADODataAccessLayer
             _cmdSQL = @"SELECT [Id]
               ,[Job]
               ,[Major]
-              ,[Importance]
-              ,[Time_Stamp] 
+              ,TRY_CONVERT(smallint,Importance) AS Importance
+              ,[Time_Stamp]
               FROM [dbo].[Company_Job_Educations]";
 
             using (SqlConnection con = new SqlConnection(DBConnectionString)) 
@@ -80,13 +79,14 @@ namespace CareerCloud.ADODataAccessLayer
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
                     int recordIndex = 0;
+
                     while (reader.Read())
                     {
                         CompanyJobEducationPoco poco = new CompanyJobEducationPoco();
                         poco.Id = (Guid)reader["Id"];
                         poco.Job = (Guid)reader["Job"];
                         poco.Major = (String)reader["Major"];
-                        poco.Importance = (short)reader["Importance"];
+                        poco.Importance= (short)reader["Importance"];
                         poco.TimeStamp = (byte[])reader["Time_Stamp"];
                         arrPoco[recordIndex++] = poco;
                     }
@@ -169,7 +169,6 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (CompanyJobEducationPoco poco in items)
                     {
-                        CompanyJobEducationPoco oPoco = new CompanyJobEducationPoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("job", poco.Job);
                         cmd.Parameters.AddWithValue("Major", poco.Major);

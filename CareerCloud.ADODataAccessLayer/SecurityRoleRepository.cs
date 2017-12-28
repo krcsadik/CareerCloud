@@ -32,7 +32,6 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (SecurityRolePoco poco in items)
                     {
-                        SecurityRolePoco oPoco = new SecurityRolePoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Role", poco.Role);
                         cmd.Parameters.AddWithValue("Is_Inactive", poco.IsInactive);
@@ -161,7 +160,6 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (SecurityRolePoco poco in items)
                     {
-                        SecurityRolePoco oPoco = new SecurityRolePoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Role", poco.Role);
                         cmd.Parameters.AddWithValue("Is_Inactive", poco.IsInactive);

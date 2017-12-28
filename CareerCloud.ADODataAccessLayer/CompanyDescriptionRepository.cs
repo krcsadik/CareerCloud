@@ -36,17 +36,16 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (CompanyDescriptionPoco poco in items)
                     {
-                            CompanyDescriptionPoco oPoco = new CompanyDescriptionPoco();
-                            cmd.Parameters.AddWithValue("Id", poco.Id);
-                            cmd.Parameters.AddWithValue("Company", poco.Company);
-                            cmd.Parameters.AddWithValue("LanguageID", poco.LanguageId);
-                            cmd.Parameters.AddWithValue("Company_Name", poco.CompanyName);
-                            cmd.Parameters.AddWithValue("Company_Description", poco.CompanyDescription);
-                            con.Open();
-                            cmd.ExecuteNonQuery();
-                            con.Close();
-                            }
+                        cmd.Parameters.AddWithValue("Id", poco.Id);
+                        cmd.Parameters.AddWithValue("Company", poco.Company);
+                        cmd.Parameters.AddWithValue("LanguageID", poco.LanguageId);
+                        cmd.Parameters.AddWithValue("Company_Name", poco.CompanyName);
+                        cmd.Parameters.AddWithValue("Company_Description", poco.CompanyDescription);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
                     }
+                }
                 catch (Exception e)
                 {
                     throw new Exception("CompanyDescriptionPoco.Add-->Insertion error : " + e.ToString());
@@ -173,7 +172,6 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (CompanyDescriptionPoco poco in items)
                     {
-                        CompanyDescriptionPoco oPoco = new CompanyDescriptionPoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Company", poco.Company);
                         cmd.Parameters.AddWithValue("LanguageID", poco.LanguageId);

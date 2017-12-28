@@ -38,7 +38,6 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (CompanyProfilePoco poco in items)
                     {
-                        CompanyProfilePoco oPoco = new CompanyProfilePoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Registration_Date", poco.RegistrationDate);
                         cmd.Parameters.AddWithValue("Company_Website", poco.CompanyWebsite);
@@ -87,15 +86,16 @@ namespace CareerCloud.ADODataAccessLayer
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
                     int recordIndex = 0;
+
                     while (reader.Read())
                     {
                         CompanyProfilePoco poco = new CompanyProfilePoco();
-                        poco.Id = (Guid)reader["Id"];
-                        poco.RegistrationDate = (DateTime)reader["Registration_Date"];
-                        poco.CompanyWebsite = (String)reader["Company_Website"];
-                        poco.ContactPhone = (String)reader["Contact_Phone"];
-                        poco.ContactName = (String)reader["Contact_Name"];
-                        poco.CompanyLogo= (Byte[])reader["Company_Logo"];
+                        poco.Id = reader.GetGuid(0);
+                        if (!reader.IsDBNull(1)) poco.RegistrationDate= reader.GetDateTime(1);
+                        if (!reader.IsDBNull(2)) poco.CompanyWebsite = reader.GetString(2);
+                        if (!reader.IsDBNull(3)) poco.ContactPhone = reader.GetString(3);
+                        if (!reader.IsDBNull(4)) poco.ContactName = reader.GetString(4);
+                        if (!reader.IsDBNull(5)) poco.CompanyLogo = (Byte[])reader["Company_Logo"];
                         poco.TimeStamp = (Byte[])reader["Time_Stamp"];
                         arrPoco[recordIndex++] = poco;
                     }
@@ -180,7 +180,6 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (CompanyProfilePoco poco in items)
                     {
-                        CompanyProfilePoco oPoco = new CompanyProfilePoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Registration_Date", poco.RegistrationDate);
                         cmd.Parameters.AddWithValue("Company_Website", poco.CompanyWebsite);
@@ -202,5 +201,6 @@ namespace CareerCloud.ADODataAccessLayer
                 }
             }
         }
+
     }
 }

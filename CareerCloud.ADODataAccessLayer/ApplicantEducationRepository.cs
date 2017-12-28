@@ -40,7 +40,6 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (ApplicantEducationPoco poco in items)
                     {
-                        ApplicantEducationPoco oPoco = new ApplicantEducationPoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
                         cmd.Parameters.AddWithValue("Major", poco.Major);
@@ -187,7 +186,6 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (ApplicantEducationPoco poco in items)
                     {
-                        ApplicantEducationPoco oPoco = new ApplicantEducationPoco();
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
                         cmd.Parameters.AddWithValue("Major", poco.Major);
