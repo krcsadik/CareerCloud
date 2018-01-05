@@ -25,7 +25,7 @@ namespace CareerCloud.ADODataAccessLayer
                ,@Job
                ,@Application_Date)";
 
-            using (SqlConnection con = new SqlConnection(base.DBConnectionString))
+            using (SqlConnection con = new SqlConnection(DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = _cmdSQL;
@@ -123,7 +123,7 @@ namespace CareerCloud.ADODataAccessLayer
         {
             _cmdSQL = @"DELETE FROM [dbo].[Applicant_Job_Applications] 
                 WHERE Id =@Id";
-            using (SqlConnection con = new SqlConnection(base.DBConnectionString))
+            using (SqlConnection con = new SqlConnection(DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = _cmdSQL;
@@ -159,7 +159,7 @@ namespace CareerCloud.ADODataAccessLayer
                 WHERE Id=@Id";
 
 
-            using (SqlConnection con = new SqlConnection(base.DBConnectionString))
+            using (SqlConnection con = new SqlConnection(DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = _cmdSQL;

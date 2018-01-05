@@ -43,7 +43,7 @@ namespace CareerCloud.ADODataAccessLayer
                ,@Force_Change_Password
                ,@Prefferred_Language)";
 
-            using (SqlConnection con = new SqlConnection(base.DBConnectionString))
+            using (SqlConnection con = new SqlConnection(DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = _cmdSQL;
@@ -168,7 +168,7 @@ namespace CareerCloud.ADODataAccessLayer
         {
             _cmdSQL = @"DELETE FROM [dbo].[Security_Logins] 
                 WHERE Id =@Id";
-            using (SqlConnection con = new SqlConnection(base.DBConnectionString))
+            using (SqlConnection con = new SqlConnection(DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = _cmdSQL;
@@ -212,7 +212,7 @@ namespace CareerCloud.ADODataAccessLayer
                ,[Prefferred_Language]=@Prefferred_Language 
                WHERE Id=@Id";
 
-            using (SqlConnection con = new SqlConnection(base.DBConnectionString))
+            using (SqlConnection con = new SqlConnection(DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = _cmdSQL;

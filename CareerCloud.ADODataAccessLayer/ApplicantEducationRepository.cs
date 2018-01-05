@@ -31,7 +31,7 @@ namespace CareerCloud.ADODataAccessLayer
                 @Completion_Date,
                 @Completion_Percent)";
 
-            using (SqlConnection con = new SqlConnection(base.DBConnectionString))
+            using (SqlConnection con = new SqlConnection(DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = _cmdSQL;
@@ -139,7 +139,7 @@ namespace CareerCloud.ADODataAccessLayer
         {
             _cmdSQL = @"DELETE FROM [dbo].[Applicant_Educations]
                 WHERE Id =@Id";
-            using (SqlConnection con = new SqlConnection(base.DBConnectionString))
+            using (SqlConnection con = new SqlConnection(DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = _cmdSQL;
@@ -177,7 +177,7 @@ namespace CareerCloud.ADODataAccessLayer
                     [Completion_Percent]=@Completion_Percent
                     WHERE Id=@Id";
 
-            using (SqlConnection con = new SqlConnection(base.DBConnectionString))
+            using (SqlConnection con = new SqlConnection(DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = _cmdSQL;

@@ -23,7 +23,7 @@ namespace CareerCloud.ADODataAccessLayer
                ,@Role
                ,@Is_Inactive)";
 
-            using (SqlConnection con = new SqlConnection(base.DBConnectionString))
+            using (SqlConnection con = new SqlConnection(DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = _cmdSQL;
@@ -117,7 +117,7 @@ namespace CareerCloud.ADODataAccessLayer
         {
             _cmdSQL = @"DELETE FROM [dbo].[Security_Roles] 
                 WHERE Id =@Id";
-            using (SqlConnection con = new SqlConnection(base.DBConnectionString))
+            using (SqlConnection con = new SqlConnection(DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = _cmdSQL;
@@ -151,7 +151,7 @@ namespace CareerCloud.ADODataAccessLayer
                 ,[Is_Inactive]=@Is_Inactive 
                 WHERE Id=@Id";
 
-            using (SqlConnection con = new SqlConnection(base.DBConnectionString))
+            using (SqlConnection con = new SqlConnection(DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = _cmdSQL;

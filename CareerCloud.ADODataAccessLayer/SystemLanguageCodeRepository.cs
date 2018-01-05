@@ -23,7 +23,7 @@ namespace CareerCloud.ADODataAccessLayer
                ,@Name
                ,@Native_Name)";
 
-            using (SqlConnection con = new SqlConnection(base.DBConnectionString))
+            using (SqlConnection con = new SqlConnection(DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = _cmdSQL;
@@ -117,7 +117,7 @@ namespace CareerCloud.ADODataAccessLayer
         {
             _cmdSQL = @"DELETE FROM [dbo].[System_Language_Codes] 
                 WHERE LanguageID =@LanguageID";
-            using (SqlConnection con = new SqlConnection(base.DBConnectionString))
+            using (SqlConnection con = new SqlConnection(DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = _cmdSQL;
@@ -150,7 +150,7 @@ namespace CareerCloud.ADODataAccessLayer
                 SET [Name]=@Name, [Native_Name]=@Native_Name 
                 WHERE LanguageID=@LanguageID";
 
-            using (SqlConnection con = new SqlConnection(base.DBConnectionString))
+            using (SqlConnection con = new SqlConnection(DBConnectionString))
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = _cmdSQL;
