@@ -11,7 +11,7 @@ namespace CareerCloud.ADODataAccessLayer
     public class SecurityLoginsLogRepository: BaseConnection,IDataRepository<SecurityLoginsLogPoco>
     {
         private string _cmdSQL;
-        private const int _maxRecordNo = 500;
+        private const int _maxRecordNo = 3000;
         public void Add(params SecurityLoginsLogPoco[] items)
         {
             _cmdSQL = @"INSERT INTO [dbo].[Security_Logins_Log]

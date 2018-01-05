@@ -11,14 +11,14 @@ namespace CareerCloud.ADODataAccessLayer
     public class ApplicantEducationRepository: BaseConnection,IDataRepository<ApplicantEducationPoco>
     {
         private string _cmdSQL;
-        private const int _maxRecordNo = 500;
+        private const int _maxRecordNo = 3000;
         public void Add(params ApplicantEducationPoco[] items)
         {
             _cmdSQL = @"INSERT INTO [dbo].[Applicant_Educations]
                ([Id]
                ,[Applicant]
                ,[Major]
-               ,[Cetificate_Diploma]
+               ,[Certificate_Diploma]
                ,[Start_Date]
                ,[Completion_Date]
                ,[Completion_Percent])
@@ -26,7 +26,7 @@ namespace CareerCloud.ADODataAccessLayer
                (@Id,
                 @Applicant, 
                 @Major,
-                @Cetificate_Diploma,
+                @Certificate_Diploma,
                 @Start_Date,
                 @Completion_Date,
                 @Completion_Percent)";
@@ -43,7 +43,7 @@ namespace CareerCloud.ADODataAccessLayer
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
                         cmd.Parameters.AddWithValue("Major", poco.Major);
-                        cmd.Parameters.AddWithValue("Cetificate_Diploma", poco.CertificateDiploma);
+                        cmd.Parameters.AddWithValue("Certificate_Diploma", poco.CertificateDiploma);
                         cmd.Parameters.AddWithValue("Start_Date", poco.StartDate);
                         cmd.Parameters.AddWithValue("Completion_Date", poco.CompletionDate);
                         cmd.Parameters.AddWithValue("Completion_Percent", poco.CompletionPercent);
@@ -73,12 +73,12 @@ namespace CareerCloud.ADODataAccessLayer
             _cmdSQL = @"SELECT [Id]
               ,[Applicant]
               ,[Major]
-              ,[Cetificate_Diploma]
+              ,[Certificate_Diploma]
               ,[Start_Date]
               ,[Completion_Date]
               ,[Completion_Percent]
               ,[Time_Stamp]
-              FROM[dbo].[Applicant_Educations]";
+              FROM [dbo].[Applicant_Educations]";
             using (SqlConnection con = new SqlConnection(DBConnectionString)) 
             {
                 try
@@ -97,7 +97,7 @@ namespace CareerCloud.ADODataAccessLayer
                         poco.Id = (Guid)reader["Id"];
                         poco.Applicant = (Guid)reader["Applicant"];
                         poco.Major = (String)reader["Major"];
-                        poco.CertificateDiploma = (String)reader["Cetificate_Diploma"];
+                        poco.CertificateDiploma = (String)reader["Certificate_Diploma"];
                         poco.StartDate = (DateTime)reader["Start_Date"];
                         poco.CompletionDate = (DateTime)reader["Completion_Date"];
                         poco.CompletionPercent = (Byte?)reader["Completion_Percent"];
@@ -169,13 +169,13 @@ namespace CareerCloud.ADODataAccessLayer
         public void Update(params ApplicantEducationPoco[] items)
         {
             _cmdSQL = @"UPDATE [dbo].[Applicant_Educations]
-                SET [Applicant]=@Applicant,
+                    SET [Applicant]=@Applicant,
                     [Major]=@Major,
-                    [Cetificate_Diploma]=@Cetificate_Diploma,
+                    [Certificate_Diploma]=@Certificate_Diploma,
                     [Start_Date]=@Start_Date,
                     [Completion_Date]=@Completion_Date,
                     [Completion_Percent]=@Completion_Percent
-                    Where Id=@Id";
+                    WHERE Id=@Id";
 
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {
@@ -189,7 +189,7 @@ namespace CareerCloud.ADODataAccessLayer
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
                         cmd.Parameters.AddWithValue("Major", poco.Major);
-                        cmd.Parameters.AddWithValue("Cetificate_Diploma", poco.CertificateDiploma);
+                        cmd.Parameters.AddWithValue("Certificate_Diploma", poco.CertificateDiploma);
                         cmd.Parameters.AddWithValue("Start_Date", poco.StartDate);
                         cmd.Parameters.AddWithValue("Completion_Date", poco.CompletionDate);
                         cmd.Parameters.AddWithValue("Completion_Percent", poco.CompletionPercent);

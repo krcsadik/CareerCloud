@@ -11,7 +11,7 @@ namespace CareerCloud.ADODataAccessLayer
     public class SystemCountryCodeRepository: BaseConnection,IDataRepository<SystemCountryCodePoco>
     {
         private string _cmdSQL;
-        private const int _maxRecordNo = 500;
+        private const int _maxRecordNo = 3000;
         public void Add(params SystemCountryCodePoco[] items)
         {
             _cmdSQL = @"INSERT INTO [dbo].[System_Country_Codes]

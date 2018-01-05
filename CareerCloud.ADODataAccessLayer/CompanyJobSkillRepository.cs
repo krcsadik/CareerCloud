@@ -11,7 +11,7 @@ namespace CareerCloud.ADODataAccessLayer
     public class CompanyJobSkillRepository: BaseConnection,IDataRepository<CompanyJobSkillPoco>
     {
         private string _cmdSQL;
-        private const int _maxRecordNo = 500;
+        private const int _maxRecordNo = 5100;
         public void Add(params CompanyJobSkillPoco[] items)
         {
             _cmdSQL = @"INSERT INTO [dbo].[Company_Job_Skills] 

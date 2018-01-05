@@ -11,7 +11,7 @@ namespace CareerCloud.ADODataAccessLayer
     public class CompanyDescriptionRepository: BaseConnection,IDataRepository<CompanyDescriptionPoco>
     {
         private string _cmdSQL;
-        private const int _maxRecordNo = 500;
+        private const int _maxRecordNo = 3000;
         public void Add(params CompanyDescriptionPoco[] items)
         {
             _cmdSQL = @"INSERT INTO [dbo].[Company_Descriptions] 
@@ -86,6 +86,7 @@ namespace CareerCloud.ADODataAccessLayer
                     {
                         CompanyDescriptionPoco poco = new CompanyDescriptionPoco();
                         poco.Id = (Guid)reader["Id"];
+                        poco.Company= (Guid)reader["Company"];
                         poco.LanguageId = (String)reader["LanguageID"];
                         poco.CompanyName = (String)reader["Company_Name"];
                         poco.CompanyDescription= (String)reader["Company_Description"];

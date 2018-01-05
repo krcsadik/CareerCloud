@@ -11,7 +11,7 @@ namespace CareerCloud.ADODataAccessLayer
     public class ApplicantWorkHistoryRepository: BaseConnection,IDataRepository<ApplicantWorkHistoryPoco>
     {
         private string _cmdSQL;
-        private const int _maxRecordNo = 500;
+        private const int _maxRecordNo = 3000;
         public void Add(params ApplicantWorkHistoryPoco[] items)
         {
             _cmdSQL = @"INSERT INTO [dbo].[Applicant_Work_History] 

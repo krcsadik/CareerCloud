@@ -11,7 +11,7 @@ namespace CareerCloud.ADODataAccessLayer
     public class SecurityLoginRepository: BaseConnection,IDataRepository<SecurityLoginPoco>
     {
         private string _cmdSQL;
-        private const int _maxRecordNo = 500;
+        private const int _maxRecordNo = 3000;
         public void Add(params SecurityLoginPoco[] items)
         {
             _cmdSQL = @"INSERT INTO [dbo].[Security_Logins] 
@@ -19,7 +19,7 @@ namespace CareerCloud.ADODataAccessLayer
                ,[Login]
                ,[Password]
                ,[Created_Date]
-               ,[Password_Update_Dated]
+               ,[Password_Update_Date]
                ,[Agreement_Accepted_Date]
                ,[Is_Locked]
                ,[Is_Inactive]
@@ -33,7 +33,7 @@ namespace CareerCloud.ADODataAccessLayer
                ,@Login
                ,@Password
                ,@Created_Date
-               ,@Password_Update_Dated
+               ,@Password_Update_Date
                ,@Agreement_Accepted_Date
                ,@Is_Locked
                ,@Is_Inactive
@@ -55,9 +55,8 @@ namespace CareerCloud.ADODataAccessLayer
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Login", poco.Login);
                         cmd.Parameters.AddWithValue("Password", poco.Password);
-                        //cmd.Parameters.AddWithValue("Salt", poco.Salt);
                         cmd.Parameters.AddWithValue("Created_Date", poco.Created);
-                        cmd.Parameters.AddWithValue("Password_Update_Dated", poco.PasswordUpdate);
+                        cmd.Parameters.AddWithValue("Password_Update_Date", poco.PasswordUpdate);
                         cmd.Parameters.AddWithValue("Agreement_Accepted_Date", poco.AgreementAccepted);
                         cmd.Parameters.AddWithValue("Is_Locked", poco.IsLocked);
                         cmd.Parameters.AddWithValue("Is_Inactive", poco.IsInactive);
@@ -92,10 +91,9 @@ namespace CareerCloud.ADODataAccessLayer
             _cmdSQL = @"SELECT [Id]
               ,[Login]
               ,[Password]
-              ,[Salt]
-              ,TRY_CONVERT(datetime2, [Created_Date]) AS Created_Date
-              ,TRY_CONVERT(datetime2, [Password_Update_Dated]) AS Password_Update_Dated
-              ,TRY_CONVERT(datetime2, [Agreement_Accepted_Date]) AS Agreement_Accepted_Date
+              ,[Created_Date]
+              ,[Password_Update_Date]
+              ,[Agreement_Accepted_Date]
               ,[Is_Locked]
               ,[Is_Inactive]
               ,[Email_Address]
@@ -104,7 +102,7 @@ namespace CareerCloud.ADODataAccessLayer
               ,[Force_Change_Password]
               ,[Prefferred_Language]
               ,[Time_Stamp] 
-              FROM [dbo].[Security_Logins]";
+              FROM [dbo].[Security_Logins] (NOLOCK)";
             using (SqlConnection con = new SqlConnection(DBConnectionString)) 
             {
                 try
@@ -122,17 +120,16 @@ namespace CareerCloud.ADODataAccessLayer
                         poco.Id = (Guid)reader["Id"];
                         poco.Login = (String)reader["Login"];
                         poco.Password = (String)reader["Password"];
-                        if (!reader.IsDBNull(3)) poco.Salt = (String)reader["Salt"];
-                        if (!reader.IsDBNull(4)) poco.Created = (DateTime)reader["Created_Date"];
-                        if (!reader.IsDBNull(5)) poco.PasswordUpdate=(DateTime?)reader["Password_Update_Dated"];
-                        if (!reader.IsDBNull(6)) poco.AgreementAccepted = (DateTime?)reader["Agreement_Accepted_Date"];
+                        poco.Created = (DateTime)reader["Created_Date"];
+                        if (!reader.IsDBNull(4)) poco.PasswordUpdate = reader.GetDateTime(4);
+                        if (!reader.IsDBNull(5)) poco.AgreementAccepted = reader.GetDateTime(5);
                         poco.IsLocked = (bool)reader["Is_Locked"];
                         poco.IsInactive= (bool)reader["Is_Inactive"];
-                        if (!reader.IsDBNull(9)) poco.EmailAddress = (String)reader["Email_Address"];
-                        if (!reader.IsDBNull(10)) poco.PhoneNumber = (String)reader["Phone_Number"];
-                        if (!reader.IsDBNull(11)) poco.FullName = (String)reader["Full_Name"];
-                        if (!reader.IsDBNull(12)) poco.ForceChangePassword = (bool)reader["Force_Change_Password"];
-                        if (!reader.IsDBNull(13)) poco.PrefferredLanguage = (String)reader["Prefferred_Language"];
+                        poco.EmailAddress = (String)reader["Email_Address"];
+                        if (!reader.IsDBNull(9)) poco.PhoneNumber = (String)reader["Phone_Number"];
+                        if (!reader.IsDBNull(10)) poco.FullName = (String)reader["Full_Name"];
+                        poco.ForceChangePassword = (bool)reader["Force_Change_Password"];
+                        if (!reader.IsDBNull(12)) poco.PrefferredLanguage = (String)reader["Prefferred_Language"];
                         poco.TimeStamp = (Byte[])reader["Time_Stamp"];
                         arrPoco[recordIndex++] = poco;
                     }
@@ -203,9 +200,8 @@ namespace CareerCloud.ADODataAccessLayer
             _cmdSQL = @"UPDATE [dbo].[Security_Logins] 
                 SET [Login]=@Login
                ,[Password]=@Password
-               ,[Salt]=@Salt
                ,[Created_Date]=@Created_Date
-               ,[Password_Update_Dated]=@Password_Update_Dated
+               ,[Password_Update_Date]=@Password_Update_Date
                ,[Agreement_Accepted_Date]=@Agreement_Accepted_Date
                ,[Is_Locked]=@Is_Locked
                ,[Is_Inactive]=@Is_Inactive
@@ -228,9 +224,8 @@ namespace CareerCloud.ADODataAccessLayer
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Login", poco.Login);
                         cmd.Parameters.AddWithValue("Password", poco.Password);
-                        cmd.Parameters.AddWithValue("Salt", poco.Salt);
                         cmd.Parameters.AddWithValue("Created_Date", poco.Created);
-                        cmd.Parameters.AddWithValue("Password_Update_Dated", poco.PasswordUpdate);
+                        cmd.Parameters.AddWithValue("Password_Update_Date", poco.PasswordUpdate);
                         cmd.Parameters.AddWithValue("Agreement_Accepted_Date", poco.AgreementAccepted);
                         cmd.Parameters.AddWithValue("Is_Locked", poco.IsLocked);
                         cmd.Parameters.AddWithValue("Is_Inactive", poco.IsInactive);

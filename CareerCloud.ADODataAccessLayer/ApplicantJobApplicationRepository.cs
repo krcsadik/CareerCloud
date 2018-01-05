@@ -11,7 +11,7 @@ namespace CareerCloud.ADODataAccessLayer
     public class ApplicantJobApplicationRepository: BaseConnection,IDataRepository<ApplicantJobApplicationPoco>
     {
         private string _cmdSQL;
-        private const int _maxRecordNo = 500;
+        private const int _maxRecordNo = 3000;
         public void Add(params ApplicantJobApplicationPoco[] items)
         {
             _cmdSQL = @"INSERT INTO [dbo].[Applicant_Job_Applications]
@@ -155,7 +155,8 @@ namespace CareerCloud.ADODataAccessLayer
             _cmdSQL = @"UPDATE [dbo].[Applicant_Job_Applications] 
                 SET [Applicant] = @Applicant
                 ,[Job] = @Job
-                ,[Application_Date] = @Application_Date";
+                ,[Application_Date] = @Application_Date 
+                WHERE Id=@Id";
 
 
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
@@ -167,6 +168,7 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     foreach (ApplicantJobApplicationPoco poco in items)
                     {
+                        cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
                         cmd.Parameters.AddWithValue("Job", poco.Job);
                         cmd.Parameters.AddWithValue("Application_Date", poco.ApplicationDate);

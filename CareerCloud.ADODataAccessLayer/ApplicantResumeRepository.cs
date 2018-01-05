@@ -11,17 +11,19 @@ namespace CareerCloud.ADODataAccessLayer
     public class ApplicantResumeRepository: BaseConnection,IDataRepository<ApplicantResumePoco>
     {
         private string _cmdSQL;
-        private const int _maxRecordNo = 500;
+        private const int _maxRecordNo = 3000;
         public void Add(params ApplicantResumePoco[] items)
         {
             _cmdSQL = @"INSERT INTO [dbo].[Applicant_Resumes]
                ([Id]
                ,[Applicant]
-               ,[Resume])
+               ,[Resume]
+               ,[Last_Updated])
                VALUES
                (@Id
                ,@Applicant
-               ,@Resume)";
+               ,@Resume
+               ,@Last_Updated)";
 
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
             {
@@ -35,6 +37,7 @@ namespace CareerCloud.ADODataAccessLayer
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
                         cmd.Parameters.AddWithValue("Resume", poco.Resume);
+                        cmd.Parameters.AddWithValue("Last_Updated", poco.LastUpdated);
                         con.Open();
                         cmd.ExecuteNonQuery();
                         con.Close();
@@ -60,7 +63,7 @@ namespace CareerCloud.ADODataAccessLayer
         {
             _cmdSQL = @"SELECT [Id]
                 ,[Applicant]
-                ,[Resume] 
+                ,[Resume] , [Last_Updated]
                 FROM [dbo].[Applicant_Resumes]";
 
             using (SqlConnection con = new SqlConnection(DBConnectionString)) 
@@ -80,6 +83,8 @@ namespace CareerCloud.ADODataAccessLayer
                         poco.Id = (Guid)reader["Id"];
                         poco.Applicant = (Guid)reader["Applicant"];
                         poco.Resume = (String)reader["Resume"];
+                        if (!reader.IsDBNull(3)) poco.LastUpdated= (DateTime?)reader["Last_Updated"];
+
                         arrPoco[recordIndex++] = poco;
                     }
                     return arrPoco.Where(a => a != null).ToList();
@@ -148,7 +153,8 @@ namespace CareerCloud.ADODataAccessLayer
         {
             _cmdSQL = @"UPDATE [dbo].[Applicant_Resumes] 
                 SET [Applicant]=@Applicant,
-                [Resume]=@Resume 
+                [Resume]=@Resume ,
+                [Last_Updated]=@Last_Updated
                 WHERE Id=@Id";
 
             using (SqlConnection con = new SqlConnection(base.DBConnectionString))
@@ -163,6 +169,7 @@ namespace CareerCloud.ADODataAccessLayer
                         cmd.Parameters.AddWithValue("Id", poco.Id);
                         cmd.Parameters.AddWithValue("Applicant", poco.Applicant);
                         cmd.Parameters.AddWithValue("Resume", poco.Resume);
+                        cmd.Parameters.AddWithValue("Last_Updated", poco.LastUpdated);
                         con.Open();
                         cmd.ExecuteNonQuery();
                         con.Close();

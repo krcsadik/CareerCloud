@@ -11,7 +11,7 @@ namespace CareerCloud.ADODataAccessLayer
     public class CompanyLocationRepository: BaseConnection,IDataRepository<CompanyLocationPoco>
     {
         private string _cmdSQL;
-        private const int _maxRecordNo = 500;
+        private const int _maxRecordNo = 3000;
         public void Add(params CompanyLocationPoco[] items)
         {
             _cmdSQL = @"INSERT INTO [dbo].[Company_Locations]
@@ -96,10 +96,10 @@ namespace CareerCloud.ADODataAccessLayer
                         poco.Id = (Guid)reader["Id"];
                         poco.Company = (Guid)reader["Company"];
                         poco.CountryCode = (String)reader["Country_Code"];
-                        poco.Province = (String)reader["State_Province_Code"];
-                        poco.Street = (String)reader["Street_Address"];
-                        poco.City = (String)reader["City_Town"];
-                        poco.PostalCode = (String)reader["Zip_Postal_Code"];
+                        if (!reader.IsDBNull(3)) poco.Province = (String)reader["State_Province_Code"];
+                        if (!reader.IsDBNull(4)) poco.Street = (String)reader["Street_Address"];
+                        if (!reader.IsDBNull(5)) poco.City = (String)reader["City_Town"];
+                        if (!reader.IsDBNull(6)) poco.PostalCode = (String)reader["Zip_Postal_Code"];
                         poco.TimeStamp = (Byte[])reader["Time_Stamp"];
                         arrPoco[recordIndex++] = poco;
                     }

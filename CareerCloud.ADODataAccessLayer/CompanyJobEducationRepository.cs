@@ -11,7 +11,7 @@ namespace CareerCloud.ADODataAccessLayer
     public class CompanyJobEducationRepository: BaseConnection,IDataRepository<CompanyJobEducationPoco>
     {
         private string _cmdSQL;
-        private const int _maxRecordNo = 500;
+        private const int _maxRecordNo = 3000;
         public void Add(params CompanyJobEducationPoco[] items)
         {
             _cmdSQL = @"INSERT INTO [dbo].[Company_Job_Educations] 
@@ -64,7 +64,7 @@ namespace CareerCloud.ADODataAccessLayer
             _cmdSQL = @"SELECT [Id]
               ,[Job]
               ,[Major]
-              ,TRY_CONVERT(smallint,Importance) AS Importance
+              ,[Importance]
               ,[Time_Stamp]
               FROM [dbo].[Company_Job_Educations]";
 

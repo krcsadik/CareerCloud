@@ -11,7 +11,7 @@ namespace CareerCloud.ADODataAccessLayer
     public class CompanyProfileRepository: BaseConnection,IDataRepository<CompanyProfilePoco>
     {
         private string _cmdSQL;
-        private const int _maxRecordNo = 500;
+        private const int _maxRecordNo = 3000;
         public void Add(params CompanyProfilePoco[] items)
         {
             _cmdSQL = @"INSERT INTO [dbo].[Company_Profiles]
@@ -91,9 +91,9 @@ namespace CareerCloud.ADODataAccessLayer
                     {
                         CompanyProfilePoco poco = new CompanyProfilePoco();
                         poco.Id = reader.GetGuid(0);
-                        if (!reader.IsDBNull(1)) poco.RegistrationDate= reader.GetDateTime(1);
+                        poco.RegistrationDate= reader.GetDateTime(1);
                         if (!reader.IsDBNull(2)) poco.CompanyWebsite = reader.GetString(2);
-                        if (!reader.IsDBNull(3)) poco.ContactPhone = reader.GetString(3);
+                        poco.ContactPhone = reader.GetString(3);
                         if (!reader.IsDBNull(4)) poco.ContactName = reader.GetString(4);
                         if (!reader.IsDBNull(5)) poco.CompanyLogo = (Byte[])reader["Company_Logo"];
                         poco.TimeStamp = (Byte[])reader["Time_Stamp"];

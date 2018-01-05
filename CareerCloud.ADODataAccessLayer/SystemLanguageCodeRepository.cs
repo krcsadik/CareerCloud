@@ -11,7 +11,7 @@ namespace CareerCloud.ADODataAccessLayer
     public class SystemLanguageCodeRepository: BaseConnection,IDataRepository<SystemLanguageCodePoco>
     {
         private string _cmdSQL;
-        private const int _maxRecordNo = 500;
+        private const int _maxRecordNo = 3000;
         public void Add(params SystemLanguageCodePoco[] items)
         {
             _cmdSQL = @"INSERT INTO [dbo].[System_Language_Codes]

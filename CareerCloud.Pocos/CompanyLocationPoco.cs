@@ -20,13 +20,13 @@ namespace CareerCloud.Pocos
         [Column("Country_Code")]
         public String CountryCode { get { return varCountryCode; } set { varCountryCode = value; } }
         [Column("State_Province_Code")]
-        public String Province{ get { return varProvince.PadRight(10); } set { varProvince = value; } }
+        public String Province{ get { return varProvince; } set { varProvince = value; } }
         [Column("Street_Address")]
         public String Street { get { return varStreet; } set { varStreet = value; } }
         [Column("City_Town")]
         public String City { get { return varCity; } set { varCity = value; } }
         [Column("Zip_Postal_Code")]
-        public String PostalCode { get { return varPostalCode.PadRight(20); } set { varPostalCode = value; } }
+        public String PostalCode { get { return varPostalCode; } set { varPostalCode = value; } }
         [Column("Time_Stamp")]
         public Byte[] TimeStamp { get { return varTimeStamp; } set { varTimeStamp = value; } }
     }
