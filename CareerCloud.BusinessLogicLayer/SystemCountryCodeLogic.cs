@@ -9,89 +9,64 @@ using System.Text.RegularExpressions;
 
 namespace CareerCloud.BusinessLogicLayer
 {
-    public class SystemCountryCodeLogic : BaseLogic<SystemCountryCodePoco>
+    public class SystemCountryCodeLogic 
     {
-        public SystemCountryCodeLogic(IDataRepository<SystemCountryCodePoco> repository) : base(repository)
+        protected IDataRepository<SystemCountryCodePoco> _repository;
+        public SystemCountryCodeLogic(IDataRepository<SystemCountryCodePoco> repository) 
         {
+            _repository = repository;
         }
 
-        public override void Add(SystemCountryCodePoco[] pocos)
-        {
-            Verify(pocos);
-            base.Add(pocos);
-        }
-
-        public override void Update(SystemCountryCodePoco[] pocos)
+        public  void Add(SystemCountryCodePoco[] pocos)
         {
             Verify(pocos);
-            base.Update(pocos);
+            _repository.Add(pocos);
         }
 
-        protected override void Verify(SystemCountryCodePoco[] pocos)
+        public void Update(SystemCountryCodePoco[] pocos)
+        {
+            Verify(pocos);
+            _repository.Update(pocos);
+        }
+
+        protected void Verify(SystemCountryCodePoco[] pocos)
         {
             List<ValidationException> exceptions = new List<ValidationException>();
             foreach (SystemCountryCodePoco poco in pocos)
             {
-                if (!CheckMajorValue(poco))
+                if (!CheckCode(poco))
                 {
-                    exceptions.Add(new ValidationException(107, "Cannot be empty or less than 3 characters"));
+                    exceptions.Add(new ValidationException(900, $"Code for SystemCountryCode {poco.Code} cannot be empty"));
                 }
-                if (!CheckStartDate(poco))
+                if (!CheckName(poco))
                 {
-                    exceptions.Add(new ValidationException(108, "Cannot be greater than today"));
+                    exceptions.Add(new ValidationException(901, $"Name for SystemCountryCode {poco.Code} cannot be empty"));
                 }
-                if (!CheckCompletionDate(poco))
-                {
-                    exceptions.Add(new ValidationException(109, "CompletionDate cannot be earlier than StartDate"));
-                }
+
             }
             if (exceptions.Count > 0)
             {
                 throw new AggregateException(exceptions);
             }
         }
-
-        private bool CheckMajorValue(SystemCountryCodePoco poco)
+        private bool CheckCode(SystemCountryCodePoco poco)
         {
-            bool result = false;
-            if (!string.IsNullOrEmpty(poco.Major))
+            bool result =true;
+            if (string.IsNullOrEmpty(poco.Code))
             {
-                if (poco.Major.Length >= 3)
-                {
-                    result = true;
-                }
+               result = false;
             }
             return result;
         }
-        private bool CheckStartDate(SystemCountryCodePoco poco)
+        private bool CheckName(SystemCountryCodePoco poco)
         {
-            bool result = false;
-            if (poco.StartDate.HasValue)
+            bool result = true;
+            if (string.IsNullOrEmpty(poco.Name))
             {
-                if (!(poco.StartDate < System.DateTime.Today))
-                {
-                    result = true;
-                }
+                result = false;
             }
-            else result = true; // if no value don't block
-
             return result;
         }
-        private bool CheckCompletionDate(SystemCountryCodePoco poco)
-        {
-            bool result = false;
-            if (poco.CompletionDate.HasValue && poco.StartDate.HasValue)
-            {
-                if (!(poco.CompletionDate > poco.StartDate))
-                {
-                    result = true;
-                }
-            }
-            else result = true; // if no value don't block
-
-            return result;
-        }
-
     }
 }
 

@@ -9,40 +9,42 @@ using System.Text.RegularExpressions;
 
 namespace CareerCloud.BusinessLogicLayer
 {
-    public class SystemLanguageCodeLogic : BaseLogic<SystemLanguageCodePoco>
+    public class SystemLanguageCodeLogic 
     {
-        public SystemLanguageCodeLogic(IDataRepository<SystemLanguageCodePoco> repository) : base(repository)
+        protected IDataRepository<SystemLanguageCodePoco> _repository;
+        public SystemLanguageCodeLogic(IDataRepository<SystemLanguageCodePoco> repository) 
         {
+            _repository = repository;
         }
 
-        public override void Add(SystemLanguageCodePoco[] pocos)
-        {
-            Verify(pocos);
-            base.Add(pocos);
-        }
-
-        public override void Update(SystemLanguageCodePoco[] pocos)
+        public void Add(SystemLanguageCodePoco[] pocos)
         {
             Verify(pocos);
-            base.Update(pocos);
+            _repository.Add(pocos);
         }
 
-        protected override void Verify(SystemLanguageCodePoco[] pocos)
+        public void Update(SystemLanguageCodePoco[] pocos)
+        {
+            Verify(pocos);
+            _repository.Update(pocos);
+        }
+
+        protected void Verify(SystemLanguageCodePoco[] pocos)
         {
             List<ValidationException> exceptions = new List<ValidationException>();
             foreach (SystemLanguageCodePoco poco in pocos)
             {
-                if (!CheckMajorValue(poco))
+                if (!CheckLanguageID(poco))
                 {
-                    exceptions.Add(new ValidationException(107, "Cannot be empty or less than 3 characters"));
+                    exceptions.Add(new ValidationException(1000, $"LanguageID for SystemLanguageCode {poco.LanguageID} cannot be empty"));
                 }
-                if (!CheckStartDate(poco))
+                if (!CheckName(poco))
                 {
-                    exceptions.Add(new ValidationException(108, "Cannot be greater than today"));
+                    exceptions.Add(new ValidationException(1001, $"Name for SystemLanguageCode {poco.LanguageID} cannot be empty"));
                 }
-                if (!CheckCompletionDate(poco))
+                if (!CheckNativeName(poco))
                 {
-                    exceptions.Add(new ValidationException(109, "CompletionDate cannot be earlier than StartDate"));
+                    exceptions.Add(new ValidationException(1002, $"NativeName for SystemLanguageCode {poco.LanguageID} cannot be empty"));
                 }
             }
             if (exceptions.Count > 0)
@@ -50,49 +52,32 @@ namespace CareerCloud.BusinessLogicLayer
                 throw new AggregateException(exceptions);
             }
         }
-
-        private bool CheckMajorValue(SystemLanguageCodePoco poco)
+        private bool CheckLanguageID(SystemLanguageCodePoco poco)
         {
-            bool result = false;
-            if (!string.IsNullOrEmpty(poco.Major))
+            bool result = true;
+            if (string.IsNullOrEmpty(poco.LanguageID))
             {
-                if (poco.Major.Length >= 3)
-                {
-                    result = true;
-                }
+                result = false;
             }
             return result;
         }
-        private bool CheckStartDate(SystemLanguageCodePoco poco)
+        private bool CheckName(SystemLanguageCodePoco poco)
         {
-            bool result = false;
-            if (poco.StartDate.HasValue)
+            bool result = true;
+            if (string.IsNullOrEmpty(poco.Name))
             {
-                if (!(poco.StartDate < System.DateTime.Today))
-                {
-                    result = true;
-                }
+                result = false;
             }
-            else result = true; // if no value don't block
-
             return result;
         }
-        private bool CheckCompletionDate(SystemLanguageCodePoco poco)
+        private bool CheckNativeName(SystemLanguageCodePoco poco)
         {
-            bool result = false;
-            if (poco.CompletionDate.HasValue && poco.StartDate.HasValue)
+            bool result = true;
+            if (string.IsNullOrEmpty(poco.NativeName))
             {
-                if (!(poco.CompletionDate > poco.StartDate))
-                {
-                    result = true;
-                }
+                result = false;
             }
-            else result = true; // if no value don't block
-
             return result;
         }
-
     }
 }
-
-

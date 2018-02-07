@@ -44,8 +44,8 @@ namespace CareerCloud.BusinessLogicLayer
         }
         private bool CheckRole(SecurityRolePoco poco)
         {
-            bool result = true;
-            if (string.IsNullOrEmpty(poco.Role))
+            bool result = false;
+            if (!string.IsNullOrEmpty(poco.Role))
             {
                 result = true;
             }

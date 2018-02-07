@@ -34,7 +34,7 @@ namespace CareerCloud.BusinessLogicLayer
             {
                 if (!CheckCompanyName(poco))
                 {
-                    exceptions.Add(new ValidationException(107, $"CompayName for ApplicantWorkHistory {poco.Id} must be greater than 2 characters"));
+                    exceptions.Add(new ValidationException(105, $"CompayName for ApplicantWorkHistory {poco.Id} must be greater than 2 characters"));
                 }
             }
             if (exceptions.Count > 0)

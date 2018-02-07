@@ -34,11 +34,11 @@ namespace CareerCloud.BusinessLogicLayer
             {
                 if (!CheckCompanyName(poco))
                 {
-                    exceptions.Add(new ValidationException(107, $"CompanyName for CompanyDescription {poco.Id} must be greater than 2 characters"));
+                    exceptions.Add(new ValidationException(106, $"CompanyName for CompanyDescription {poco.Id} must be greater than 2 characters"));
                 }
                 if (!CheckCompanyDescription(poco))
                 {
-                    exceptions.Add(new ValidationException(108, $"CompanyDescription for CompanyDescription {poco.Id} must be greater than 2 characters"));
+                    exceptions.Add(new ValidationException(107, $"CompanyDescription for CompanyDescription {poco.Id} must be greater than 2 characters"));
                 }
             }
             if (exceptions.Count > 0)

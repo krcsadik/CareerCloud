@@ -36,6 +36,10 @@ namespace CareerCloud.BusinessLogicLayer
                 {
                     exceptions.Add(new ValidationException(601, $"ContactPhone for CompanyProfile {poco.Id} must correspond to a valid phone number (e.g. 416-555-1234)"));
                 }
+                if (!CheckWebSite(poco))
+                {
+                    exceptions.Add(new ValidationException(600, $"WebSite for CompanyProfile {poco.Id}  must end with the following extensions – \".ca\", \".com\", \".biz\""));
+                }
             }
             if (exceptions.Count > 0)
             {
@@ -44,30 +48,61 @@ namespace CareerCloud.BusinessLogicLayer
         }
         private bool CheckContactPhone(CompanyProfilePoco poco)
         {
-            bool result = true;
-            string[] phoneComponents = poco.ContactPhone.Split('-');
-            if (phoneComponents.Length < 3)
+            bool result = false;
+            if (!string.IsNullOrEmpty(poco.ContactPhone))
             {
-                result = false;
+                string[] phoneComponents = poco.ContactPhone.Split('-');
+                if (phoneComponents.Length >2)
+                {
+                    result = true;
+                }
+                else
+                {
+                    bool bCheck = true;
+                    if (phoneComponents[0].Length < 3)
+                    {
+                        bCheck = false;
+                    }
+                    if (bCheck  && phoneComponents[1].Length < 3)
+                    {
+                        bCheck= false;
+                    }
+                    if (bCheck && phoneComponents[2].Length < 4)
+                    {
+                        bCheck= false;
+                    }
+                    result = bCheck;
+                }
             }
-            else
+            return result;
+        }
+        private bool CheckWebSite(CompanyProfilePoco poco)
+        {
+            bool result = false;
+            if (!string.IsNullOrEmpty(poco.CompanyWebsite))
             {
-                if (phoneComponents[0].Length < 3)
+                string[] webSiteComponents = poco.CompanyWebsite.Split('.');
+                if (webSiteComponents.Length >= 2)
                 {
-                    result = false;
-                }
-                else if (phoneComponents[1].Length < 3)
-                {
-                    result = false;
-                }
-                else if (phoneComponents[2].Length < 4)
-                {
-                    result = false;
+                    string suffix = webSiteComponents[webSiteComponents.Length - 1];
+                    suffix = suffix.TrimEnd('\\').ToUpper();
+                    result = true;
+                    switch (suffix)
+                    {
+                        case "CA":
+                            break;
+                        case "COM":
+                            break;
+                        case "BIZ":
+                            break;
+                        default:
+                            result = false;
+                            break;
+                    }
                 }
             }
             return result;
         }
     }
+
 }
-
-
