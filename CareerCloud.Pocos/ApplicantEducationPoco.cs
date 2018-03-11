@@ -17,6 +17,7 @@ namespace CareerCloud.Pocos
         private Byte[] varTimeStamp;
         [Key]
         public Guid Id { get { return varId; } set { varId = value; } }
+        [ForeignKey("ApplicantProfiles")]
         public Guid Applicant { get { return varApplicant; } set { varApplicant = value; } }
         public String Major { get { return varMajor; } set { varMajor = value; } }
         [Column("Certificate_Diploma")]
@@ -28,6 +29,11 @@ namespace CareerCloud.Pocos
         [Column("Completion_Percent")]
         public Byte? CompletionPercent { get { return varCompletionPercent; } set { varCompletionPercent = value; } }
         [Column("Time_Stamp")]
-        public Byte[] TimeStamp { get { return varTimeStamp; } set { varTimeStamp = value; } }        
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [MaxLength(8)]
+        [Timestamp]
+        public Byte[] TimeStamp { get { return varTimeStamp; } set { varTimeStamp = value; } }
+
+        public virtual ApplicantProfilePoco ApplicantProfiles { get; set; }
     }
 }

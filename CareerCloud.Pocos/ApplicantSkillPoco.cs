@@ -17,6 +17,7 @@ namespace CareerCloud.Pocos
         private Byte[] varTimeStamp;
         [Key]
         public Guid Id { get { return varId; } set { varId = value; } }
+        [ForeignKey("ApplicantProfiles")]
         public Guid Applicant { get { return varApplicant; } set { varApplicant = value; } }
         public String Skill { get { return varSkill; } set { varSkill = value; } }
         [Column("Skill_Level")]
@@ -30,6 +31,10 @@ namespace CareerCloud.Pocos
         [Column("End_Year")]
         public Int32 EndYear { get { return varEndYear; } set { varEndYear = value; } }
         [Column("Time_Stamp")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [MaxLength(8)]
+        [Timestamp]
         public Byte[] TimeStamp { get { return varTimeStamp; } set { varTimeStamp = value; } }
+        public virtual ApplicantProfilePoco ApplicantProfiles { get; set; }
     }
 }

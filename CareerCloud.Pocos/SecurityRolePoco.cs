@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 namespace CareerCloud.Pocos
 {
     [Table("Security_Roles")]
@@ -14,5 +15,6 @@ namespace CareerCloud.Pocos
         public String Role { get { return varRole; } set { varRole = value; } }
         [Column("Is_Inactive")]
         public Boolean IsInactive { get { return varIsInactive; } set { varIsInactive = value; } }
+        public virtual ICollection<SecurityLoginsRolePoco> SecuritysLoginsRoles { get; set; }
     }
 }

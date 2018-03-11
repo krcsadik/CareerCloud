@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 namespace CareerCloud.Pocos
 {
     [Table("Applicant_Profiles")]
@@ -19,6 +20,7 @@ namespace CareerCloud.Pocos
         private Byte[] varTimeStamp;
         [Key]
         public Guid Id { get { return varId; } set { varId = value; } }
+        [ForeignKey("SecurityLogins")]
         public Guid Login { get { return varLogin; } set { varLogin = value; } }
         [Column("Current_Salary")]
         public Decimal? CurrentSalary { get { return varCurrentSalary; } set { varCurrentSalary = value; } }
@@ -26,6 +28,7 @@ namespace CareerCloud.Pocos
         public Decimal? CurrentRate { get { return varCurrentRate; } set { varCurrentRate = value; } }
         public String Currency { get { return varCurrency; } set { varCurrency = value; } }
         [Column("Country_Code")]
+        [ForeignKey("SystemCountryCodes")]
         public String Country { get { return varCountry; } set { varCountry = value; } }
         [Column("State_Province_Code")]
         public String Province { get { return varProvince; } set { varProvince = value; } }
@@ -36,6 +39,17 @@ namespace CareerCloud.Pocos
         [Column("Zip_Postal_Code")]
         public String PostalCode { get { return varPostalCode; } set { varPostalCode = value; } }
         [Column("Time_Stamp")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [MaxLength(8)]
+        [Timestamp]
         public Byte[] TimeStamp { get { return varTimeStamp; } set { varTimeStamp = value; } }
+        public virtual ICollection<ApplicantEducationPoco> ApplicantEducations { get; set; }
+        public virtual ICollection<ApplicantJobApplicationPoco> ApplicantJobApplications { get; set; }
+        public virtual SecurityLoginPoco SecurityLogins { get; set; }
+        public virtual SystemCountryCodePoco SystemCountryCodes { get; set; }
+        public virtual ICollection<ApplicantResumePoco> ApplicantResumes { get; set; }
+        public virtual ICollection<ApplicantSkillPoco> ApplicantSkills { get; set; }
+        public virtual ICollection<ApplicantWorkHistoryPoco> ApplicantWorkHistories { get; set; }
     }
 }
+

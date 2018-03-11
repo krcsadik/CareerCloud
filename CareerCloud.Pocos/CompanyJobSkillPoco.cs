@@ -14,12 +14,17 @@ namespace CareerCloud.Pocos
         private Byte[] varTimeStamp;
         [Key]
         public Guid Id { get { return varId; } set { varId = value; } }
+        [ForeignKey("CompanyJobs")]
         public Guid Job { get { return varJob; } set { varJob = value; } }
         public String Skill { get { return varSkill; } set { varSkill = value; } }
         [Column("Skill_Level")]
         public String SkillLevel { get { return varSkillLevel; } set { varSkillLevel = value; } }
         public Int32 Importance { get { return varImportance; } set { varImportance = value; } }
         [Column("Time_Stamp")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [MaxLength(8)]
+        [Timestamp]
         public Byte[] TimeStamp { get { return varTimeStamp; } set { varTimeStamp = value; } }
+        public virtual CompanyJobPoco CompanyJobs { get; set; }
     }
 }

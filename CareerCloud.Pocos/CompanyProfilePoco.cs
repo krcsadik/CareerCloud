@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 namespace CareerCloud.Pocos     
 {
     [Table("Company_Profiles")]
@@ -26,6 +27,12 @@ namespace CareerCloud.Pocos
         [Column("Company_Logo")]
         public Byte[] CompanyLogo { get { return varCompanyLogo; } set { varCompanyLogo = value; } }
         [Column("Time_Stamp")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [MaxLength(8)]
+        [Timestamp]
         public Byte[] TimeStamp { get { return varTimeStamp; } set { varTimeStamp = value; } }
+        public virtual ICollection<CompanyDescriptionPoco> CompanyDescriptions { get; set; }
+        public virtual ICollection<CompanyJobPoco> ComspanyJobs { get; set; }
+        public virtual ICollection<CompanyLocationPoco> CompanyLocations { get; set; }
     }
 }

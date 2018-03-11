@@ -16,6 +16,7 @@ namespace CareerCloud.Pocos
         private Byte[] varTimeStamp;
         [Key]
         public Guid Id { get { return varId; } set { varId = value; } }
+        [ForeignKey("CompanyProfiles")]
         public Guid Company { get { return varCompany; } set { varCompany = value; } }
         [Column("Country_Code")]
         public String CountryCode { get { return varCountryCode; } set { varCountryCode = value; } }
@@ -28,6 +29,10 @@ namespace CareerCloud.Pocos
         [Column("Zip_Postal_Code")]
         public String PostalCode { get { return varPostalCode; } set { varPostalCode = value; } }
         [Column("Time_Stamp")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [MaxLength(8)]
+        [Timestamp]
         public Byte[] TimeStamp { get { return varTimeStamp; } set { varTimeStamp = value; } }
+        public virtual CompanyProfilePoco CompanyProfiles { get; set; }
     }
 }

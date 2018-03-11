@@ -12,9 +12,11 @@ namespace CareerCloud.Pocos
         private DateTime? varLastUpdated;
         [Key]
         public Guid Id { get { return varId; } set { varId = value; } }
+        [ForeignKey("ApplicantProfiles")]
         public Guid Applicant { get { return varApplicant; } set { varApplicant = value; } }
         public String Resume { get { return varResume; } set { varResume = value; } }
         [Column("Last_Updated")]
         public DateTime? LastUpdated { get { return varLastUpdated; } set { varLastUpdated= value; } }
+        public virtual ApplicantProfilePoco ApplicantProfiles { get; set; }
     }
 }

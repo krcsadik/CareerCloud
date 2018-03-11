@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 namespace CareerCloud.Pocos
 {
     [Table("Security_Logins")]
@@ -25,6 +26,7 @@ namespace CareerCloud.Pocos
         public Guid Id { get { return varId; } set { varId = value; } }
         public String Login { get { return varLogin; } set { varLogin = value; } }
         public String Password { get { return varPassword; } set { varPassword = value; } }
+        [NotMapped]
         public String Salt { get { return varSalt; } set { varSalt = value; } }
         [Column("Created_Date")]
         public DateTime Created { get { return varCreated; } set { varCreated = value; } }
@@ -47,6 +49,12 @@ namespace CareerCloud.Pocos
         [Column("Prefferred_Language")]
         public String PrefferredLanguage { get { return varPrefferredLanguage; } set { varPrefferredLanguage = value; } }
         [Column("Time_Stamp")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [MaxLength(8)]
+        [Timestamp]
         public Byte[] TimeStamp { get { return varTimeStamp; } set { varTimeStamp = value; } }
+        public virtual ICollection<ApplicantProfilePoco> ApplicantProfiles { get; set; }
+        public virtual ICollection<SecurityLoginsLogPoco> SecurityLoginsLogs { get; set; }
+        public virtual ICollection<SecurityLoginsRolePoco> SecurityLoginsRoles { get; set; }
     }
 }

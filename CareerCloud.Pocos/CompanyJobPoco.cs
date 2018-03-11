@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 namespace CareerCloud.Pocos
 {
     [Table("Company_Jobs")]
@@ -14,6 +15,7 @@ namespace CareerCloud.Pocos
         private Byte[] varTimeStamp;
         [Key]
         public Guid Id { get { return varId; } set { varId = value; } }
+        [ForeignKey("CompanyProfiles")]
         public Guid Company { get { return varCompany; } set { varCompany = value; } }
         [Column("Profile_Created")]
         public DateTime ProfileCreated { get { return varProfileCreated; } set { varProfileCreated = value; } }
@@ -22,6 +24,16 @@ namespace CareerCloud.Pocos
         [Column("Is_Company_Hidden")]
         public Boolean IsCompanyHidden { get { return varIsCompanyHidden; } set { varIsCompanyHidden = value; } }
         [Column("Time_Stamp")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [MaxLength(8)]
+        [Timestamp]
         public Byte[] TimeStamp { get { return varTimeStamp; } set { varTimeStamp = value; } }
+
+        public virtual ICollection<ApplicantJobApplicationPoco> ApplicantJobApplications { get; set; }
+        public virtual ICollection<CompanyJobEducationPoco> CompanyJobEducations { get; set; }
+        public virtual ICollection<CompanyJobSkillPoco> CompanyJobSkills { get; set; }
+        public virtual CompanyProfilePoco CompanyProfiles { get; set; }
+        public virtual ICollection<CompanyJobDescriptionPoco> CompanyJobsDescriptions { get; set; }
+
     }
 }
