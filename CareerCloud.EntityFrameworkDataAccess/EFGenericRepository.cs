@@ -13,9 +13,9 @@ namespace CareerCloud.EntityFrameworkDataAccess
     public class EFGenericRepository <T>: IDataRepository<T> where T : class
     {
         private readonly  CareerCloudContext _context;
-        public EFGenericRepository( )
+        public EFGenericRepository(bool proxyEnabled = true)
         {
-            _context = new CareerCloudContext();
+            _context = new CareerCloudContext(proxyEnabled);
         }
         public void Add(params T[] items)
         {

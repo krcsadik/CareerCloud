@@ -1,0 +1,98 @@
+﻿@model CareerCloud.Pocos.ApplicantJobApplicationPoco
+
+@{
+    /**/
+    TempData.Keep("ListJobsAppliedModel");
+}
+
+
+<p>
+    <h5>Current Applicant : @this.Session["_ApplicantId"]</h5>
+
+    @using (Html.BeginForm())
+    {
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        <hr />
+        <table class="table">
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.CompanyJobs.CompanyJobsDescriptions.FirstOrDefault().JobName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.CompanyJobs.CompanyJobsDescriptions.FirstOrDefault().JobName)
+                </td>
+            <tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.CompanyJobs.ProfileCreated)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.CompanyJobs.ProfileCreated)
+                </td>
+            <tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.ApplicationDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.ApplicationDate)
+                </td>
+            <tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.CompanyJobs.CompanyJobsDescriptions.FirstOrDefault().JobDescriptions)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.CompanyJobs.CompanyJobsDescriptions.FirstOrDefault().JobDescriptions)
+                </td>
+            <tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.CompanyJobs.CompanyProfiles.CompanyDescriptions.Where(c => c.LanguageId.Trim() == "EN").FirstOrDefault().CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.CompanyJobs.CompanyProfiles.CompanyDescriptions.Where(c => c.LanguageId.Trim() == "EN").FirstOrDefault().CompanyName)
+                </td>
+            <tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.CompanyJobs.CompanyProfiles.CompanyWebsite)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.CompanyJobs.CompanyProfiles.CompanyWebsite)
+                </td>
+            <tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.CompanyJobs.CompanyProfiles.CompanyLocations.FirstOrDefault().City)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.CompanyJobs.CompanyProfiles.CompanyLocations.FirstOrDefault().City)
+                </td>
+            <tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.CompanyJobs.CompanyProfiles.CompanyLocations.FirstOrDefault().PostalCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.CompanyJobs.CompanyProfiles.CompanyLocations.FirstOrDefault().PostalCode)
+                </td>
+            <tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                </td>
+            <tr>
+            <tr>
+                <td colspan="2">
+                    <div class="form-actions no-color">
+                        @Html.ActionLink("Back to List", "ListJobsApplied")
+                    </div>
+                </td>
+            <tr>
+        </table>
+        //!! Remove all tempdata and disable submit button to force user just click to main Page and reload all records again from  DB.
+    }

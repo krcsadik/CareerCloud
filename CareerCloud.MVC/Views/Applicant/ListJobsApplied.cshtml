@@ -1,0 +1,50 @@
+﻿    @model IEnumerable<CareerCloud.Pocos.ApplicantJobApplicationPoco>
+
+    @{
+        ViewBag.Title = "Applied Job List";
+    }
+
+    <h2>Applied Job List</h2>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyJobs.CompanyJobsDescriptions.FirstOrDefault().JobName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyJobs.ProfileCreated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyJobs.CompanyProfiles.CompanyDescriptions.Where(c => c.LanguageId.Trim() == "EN").FirstOrDefault().CompanyName)
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyJobs.CompanyProfiles.CompanyLocations.FirstOrDefault().City)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.CompanyJobs.CompanyJobsDescriptions.FirstOrDefault().JobName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.CompanyJobs.ProfileCreated)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.ApplicationDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.CompanyJobs.CompanyProfiles.CompanyDescriptions.Where(c => c.LanguageId.Trim() == "EN").FirstOrDefault().CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.CompanyJobs.CompanyProfiles.CompanyLocations.FirstOrDefault().City)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "JobDetailsApplied", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </table>

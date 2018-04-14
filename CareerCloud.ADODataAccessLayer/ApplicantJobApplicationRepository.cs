@@ -101,17 +101,17 @@ namespace CareerCloud.ADODataAccessLayer
             }
         }
 
-        public IList<ApplicantJobApplicationPoco> GetList(Func<ApplicantJobApplicationPoco, bool> where, params Expression<Func<ApplicantJobApplicationPoco, object>>[] navigationProperties)
+        public IList<ApplicantJobApplicationPoco> GetList(Expression<Func<ApplicantJobApplicationPoco, bool>> where, params Expression<Func<ApplicantJobApplicationPoco, object>>[] navigationProperties)
         {
             throw new NotImplementedException();
         }
 
-        public ApplicantJobApplicationPoco GetSingle(Func<ApplicantJobApplicationPoco, bool> where, params Expression<Func<ApplicantJobApplicationPoco, object>>[] navigationProperties)
+        public ApplicantJobApplicationPoco GetSingle(Expression<Func<ApplicantJobApplicationPoco, bool>> where, params Expression<Func<ApplicantJobApplicationPoco, object>>[] navigationProperties)
         {
             try
             {
                 ApplicantJobApplicationPoco[] arrPoco = GetAll().ToArray();
-                return arrPoco.Where(where).ToList().FirstOrDefault();
+                return arrPoco.Where(where ).ToList().FirstOrDefault();
             }
             catch (Exception e)
             {

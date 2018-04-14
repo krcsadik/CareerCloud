@@ -1,0 +1,69 @@
+﻿@*@model IEnumerable<CareerCloud.Pocos.CompanyJobPoco>*@
+@model IEnumerable<CareerCloud.Pocos.CompanyJobPoco>
+
+@{
+    ViewBag.Title = "Company Job List";
+}
+
+<h2>Company Jobs</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyJobsDescriptions.FirstOrDefault().JobName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProfileCreated)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyProfiles.CompanyDescriptions.Where(c => c.LanguageId.Trim() == "EN").FirstOrDefault().CompanyName)
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyProfiles.CompanyLocations.FirstOrDefault().City)
+        </th>
+        <th>
+            <span>Job Id</span>
+        </th>
+        <th>
+            <span>ProfileId  </span>  |  <span>JobCompanyId   </span>
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.CompanyJobsDescriptions.FirstOrDefault().JobName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.ProfileCreated)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.CompanyProfiles.CompanyDescriptions.Where(c => c.LanguageId.Trim() == "EN").FirstOrDefault().CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.CompanyProfiles.CompanyLocations.FirstOrDefault().City)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Id);
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Company) |
+                @Html.DisplayFor(model => item.CompanyProfiles.Id)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "JobDetails", new { id = item.Id }) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Delete ", "Delete", new { id = item.Id })
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+            </td>
+        </tr>
+    }
+</table>

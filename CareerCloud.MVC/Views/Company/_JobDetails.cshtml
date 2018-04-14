@@ -1,0 +1,88 @@
+﻿@model CareerCloud.Pocos.CompanyJobPoco
+
+@{
+    /**/
+    ViewBag.Title = "Job Preview";
+}
+
+@{
+    TempData.Keep("JobDetailsModel"); // if failure to try again keep the temp  model object
+ }
+<p>
+    <h5>Current Company: @this.Session["_CompanyId"]</h5>
+
+    <hr />
+    <table class="table">
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.CompanyJobsDescriptions.FirstOrDefault().JobName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.CompanyJobsDescriptions.FirstOrDefault().JobName)
+            </td>
+        <tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.ProfileCreated)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.ProfileCreated)
+            </td>
+        <tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.CompanyJobsDescriptions.FirstOrDefault().JobDescriptions)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.CompanyJobsDescriptions.FirstOrDefault().JobDescriptions)
+            </td>
+        <tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.CompanyProfiles.CompanyDescriptions.Where(c => c.LanguageId.Trim() == "EN").FirstOrDefault().CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.CompanyProfiles.CompanyDescriptions.Where(c => c.LanguageId.Trim() == "EN").FirstOrDefault().CompanyName)
+            </td>
+        <tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.CompanyProfiles.CompanyWebsite)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.CompanyProfiles.CompanyWebsite)
+            </td>
+        <tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.CompanyProfiles.CompanyLocations.FirstOrDefault().City)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.CompanyProfiles.CompanyLocations.FirstOrDefault().City)
+            </td>
+        <tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.CompanyProfiles.CompanyLocations.FirstOrDefault().PostalCode)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.CompanyProfiles.CompanyLocations.FirstOrDefault().PostalCode)
+            </td>
+        <tr>
+        <tr>
+            <td>
+                <span>Company Id</span> | <span>Company Profile Id</span>
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Company) |
+                @Html.DisplayFor(model => model.CompanyProfiles.Id) |
+            </td>
+        <tr>
+        <tr>
+            <td colspan="2">
+                @Html.ActionLink("Back to List", "ListJobs") |
+                @Html.ActionLink("Check Applied Candidates", "ListAppliers") |
+            </td>
+        <tr>
+    </table>
+    

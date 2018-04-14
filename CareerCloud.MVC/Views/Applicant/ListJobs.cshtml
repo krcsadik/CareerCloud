@@ -1,0 +1,69 @@
+﻿@*@model IEnumerable<CareerCloud.Pocos.CompanyJobPoco>*@
+@model IEnumerable<CareerCloud.Pocos.CompanyJobPoco>
+
+@{
+    ViewBag.Title = "Posted Job List";
+}
+
+<h2>Job Postings</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyJobsDescriptions.FirstOrDefault().JobName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProfileCreated)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyProfiles.CompanyDescriptions.Where(c => c.LanguageId.Trim() == "EN").FirstOrDefault().CompanyName)
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyProfiles.CompanyLocations.FirstOrDefault().City)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.CompanyJobsDescriptions.FirstOrDefault().JobName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.ProfileCreated)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.CompanyProfiles.CompanyDescriptions.Where(c => c.LanguageId.Trim() == "EN").FirstOrDefault().CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.CompanyProfiles.CompanyLocations.FirstOrDefault().City)
+            </td>
+
+            <td>
+                @{
+                    bool bAddLink = true;
+                    if (this.Session["_ApplicationGuidList"] != null)
+                    {
+                        if (((List<Guid>)this.Session["_ApplicationGuidList"]).Contains(item.Id))
+                        {
+                            bAddLink = false;
+                        }
+                    }
+                    if (bAddLink)
+                    {
+                        @Html.ActionLink("Apply", "JobDetails", new { id = item.Id });
+                    }
+                    else
+                    {
+                        <text><h5 style="color:green;"> Applied </h5></text>
+                    }
+                 }
+
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+            </td>
+        </tr>
+     }
+</table>

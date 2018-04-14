@@ -1,0 +1,120 @@
+﻿@model CareerCloud.Pocos.CompanyJobPoco
+
+
+@{
+    var AlertMessage = ViewBag.AlertMessage ?? string.Empty;
+    var SuccessMessage = ViewBag.SuccessMessage ?? string.Empty;
+
+    if (SuccessMessage == "")
+    {
+        TempData.Keep("JobDetailsModel"); // if failure to try again keep the temp  model object
+    }
+}
+<p>
+    <h5>Current Applicant : @this.Session["_ApplicantId"]</h5>
+    <br />
+    <h3 style="color:green;">@SuccessMessage</h3>
+
+    @using (Html.BeginForm("ApplyJob", "Applicant", FormMethod.Post))
+    {
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        <hr />
+        <table class="table">
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.CompanyJobsDescriptions.FirstOrDefault().JobName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.CompanyJobsDescriptions.FirstOrDefault().JobName)
+                </td>
+            <tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.ProfileCreated)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.ProfileCreated)
+                </td>
+            <tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.CompanyJobsDescriptions.FirstOrDefault().JobDescriptions)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.CompanyJobsDescriptions.FirstOrDefault().JobDescriptions)
+                </td>
+            <tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.CompanyProfiles.CompanyDescriptions.Where(c => c.LanguageId.Trim() == "EN").FirstOrDefault().CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.CompanyProfiles.CompanyDescriptions.Where(c => c.LanguageId.Trim() == "EN").FirstOrDefault().CompanyName)
+                </td>
+            <tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.CompanyProfiles.CompanyWebsite)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.CompanyProfiles.CompanyWebsite)
+                </td>
+            <tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.CompanyProfiles.CompanyLocations.FirstOrDefault().City)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.CompanyProfiles.CompanyLocations.FirstOrDefault().City)
+                </td>
+            <tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.CompanyProfiles.CompanyLocations.FirstOrDefault().PostalCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.CompanyProfiles.CompanyLocations.FirstOrDefault().PostalCode)
+                </td>
+            <tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    @Html.HiddenFor(model => model.Id)   @*!! for form post binding !!*@
+                </td>
+            <tr>
+            <tr>
+                <td colspan="2">
+                    <div class="form-actions no-color">
+                        <input id="btnJobApply" name="btnJobApply" type="submit" value="Apply To Job" class="btn btn-default" /> |
+                        @Html.ActionLink("Back to List", "ListJobs")
+                    </div>
+                </td>
+            <tr>
+        </table>
+        //!! Remove all tempdata and disable submit button to force user just click to main Page and reload all records again from  DB.
+
+        if (SuccessMessage != "")
+        {
+            //TempData.Remove("JobDetailsModel");
+            //TempData.Remove("ListJobsModel");
+            TempData["AppliedJobId"] = Model.Id;
+            TempData.Keep("AppliedJobId");
+        }
+
+        <script>
+            var messageAlert = '@AlertMessage';
+            var messageSuccess = '@SuccessMessage';
+
+            if (messageAlert) {
+                alert(messageAlert);
+            }
+            if (messageSuccess) {
+                //$('#btnJobApply').attr("disabled", "disabled");
+                document.getElementById("btnJobApply").setAttribute("disabled", "disabled");
+                //document.getElementById("btnJobApply").setAttribute("disabled", "disabled");
+            }
+        </script>
+    }

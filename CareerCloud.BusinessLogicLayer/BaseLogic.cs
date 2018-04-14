@@ -2,6 +2,7 @@
 using CareerCloud.Pocos;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace CareerCloud.BusinessLogicLayer
@@ -22,7 +23,10 @@ namespace CareerCloud.BusinessLogicLayer
 
         public virtual TPoco Get(Guid id)
         {
-            return _repository.GetSingle(c => c.Id == id);
+
+            var item = _repository.GetSingle(c => c.Id == id);
+            //Trace.TraceInformation($"LOGIC public virtual TPoco Get(Guid id) --> {item.GetType().ToString()}"); 
+            return (TPoco)item;
         }
 
         public virtual List<TPoco> GetAll()

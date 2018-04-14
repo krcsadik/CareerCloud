@@ -5,16 +5,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using CareerCloud.Pocos;
+using System.Data.Entity.Infrastructure.Interception;
 
 namespace CareerCloud.EntityFrameworkDataAccess
 {
 
     public class CareerCloudContext : DbContext
     {
-        public CareerCloudContext() : base("name=dbconnection")
+        /* ... to be removed on assignment delivery*/
+        private static bool isDbInterceptionInitialised = false;
+
+        public CareerCloudContext(bool proxyEnabled =true) : base("name=dbconnection")
         {
-            
+
+            Configuration.ProxyCreationEnabled = proxyEnabled; // for preventing xml serilization recursivity.
+            if (!isDbInterceptionInitialised)
+            {
+                // if want to log sql queries , just unmarked two line
+                //DbInterception.Add(new InsertUpdateInterceptor());
+                //isDbInterceptionInitialised = true;
+            }
         }
+        /* ... to be removed on assignment delivery*/
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -37,10 +50,15 @@ namespace CareerCloud.EntityFrameworkDataAccess
         public virtual DbSet<SecurityRolePoco> SecurityRoles { get; set; }
         public virtual DbSet<SystemCountryCodePoco> SystemCountryCodes { get; set; }
         public virtual DbSet<SystemLanguageCodePoco> SystemLanguageCodes { get; set; }
+        public virtual DbSet<ApplicantResumePoco> ApplicantResumePocoes { get; set; }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
 
+            if (OnDisposed != null) OnDisposed(this, null);
+        }
 
-
-
+        public event EventHandler OnDisposed;
     }
 }

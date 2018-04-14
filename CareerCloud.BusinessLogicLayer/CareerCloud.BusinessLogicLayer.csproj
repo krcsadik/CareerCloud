@@ -64,10 +64,6 @@
     <Compile Include="ValidationException.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CareerCloud.ADODataAccessLayer\CareerCloud.ADODataAccessLayer.csproj">
-      <Project>{161a9443-584f-45b3-8dc2-83143ab7302a}</Project>
-      <Name>CareerCloud.ADODataAccessLayer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CareerCloud.DataAccessLayer\CareerCloud.DataAccessLayer.csproj">
       <Project>{e401cdba-d52e-44c2-bcf2-443de187ba29}</Project>
       <Name>CareerCloud.DataAccessLayer</Name>
@@ -76,6 +72,9 @@
       <Project>{d2f18398-6bc2-4f7e-b8b9-8dba6b2cbfc1}</Project>
       <Name>CareerCloud.Pocos</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
