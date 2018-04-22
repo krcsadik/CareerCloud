@@ -8,26 +8,22 @@ namespace CareerCloud.Pocos
     [DataContract]
     public class ApplicantResumePoco : IPoco
     {
-        private Guid varId;
-        private Guid varApplicant;
-        private String varResume;
-        private DateTime? varLastUpdated;
         [Key]
         [DataMember]
-        public Guid Id { get { return varId; } set { varId = value; } }
+        public Guid Id { get; set; }
 
         [ForeignKey("ApplicantProfiles")]
         [DataMember]
-        public Guid Applicant { get { return varApplicant; } set { varApplicant = value; } }
+        public Guid Applicant { get; set; }
 
         [Required]
         [DataMember]
-        public String Resume { get { return varResume; } set { varResume = value; } }
+        public String Resume { get; set; }
 
         [Column("Last_Updated")]
         [Display(Name = "Last Updated")]
         [DataMember]
-        public DateTime? LastUpdated { get { return varLastUpdated; } set { varLastUpdated= value; } }
+        public DateTime? LastUpdated { get; set; }
 
         public virtual ApplicantProfilePoco ApplicantProfiles { get; set; }
     }

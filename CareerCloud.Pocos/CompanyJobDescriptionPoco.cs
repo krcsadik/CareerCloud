@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;using System.Runtime.Serialization;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 namespace CareerCloud.Pocos
 {
@@ -8,26 +8,21 @@ namespace CareerCloud.Pocos
     [DataContract]
     public class CompanyJobDescriptionPoco : IPoco
     {
-        private Guid varId;
-        private Guid varJob;
-        private String varJobName;
-        private String varJobDescriptions;
-        private Byte[] varTimeStamp;
         [Key]
         [DataMember]
-        public Guid Id { get { return varId; } set { varId = value; } }
+        public Guid Id { get; set; }
 
         [ForeignKey("CompanyJobs")]
         [DataMember]
-        public Guid Job { get { return varJob; } set { varJob = value; } }
+        public Guid Job { get; set; }
 
         [Column("Job_Name")]
         [DataMember]
-        public String JobName { get { return varJobName; } set { varJobName = value; } }
+        public String JobName { get; set; }
 
         [Column("Job_Descriptions")]
         [DataMember]
-        public String JobDescriptions { get { return varJobDescriptions; } set { varJobDescriptions = value; } }
+        public String JobDescriptions { get; set; }
 
         [Column("Time_Stamp")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
@@ -35,7 +30,7 @@ namespace CareerCloud.Pocos
         [Timestamp]
         [ScaffoldColumn(false)]
         [DataMember]
-        public Byte[] TimeStamp { get { return varTimeStamp; } set { varTimeStamp = value; } }
+        public Byte[] TimeStamp { get; set; }
 
         public virtual CompanyJobPoco CompanyJobs { get; set; }
     }

@@ -7,33 +7,28 @@ namespace CareerCloud.Pocos
     [DataContract]
     public class SecurityLoginsLogPoco : IPoco
     {
-        private Guid varId;
-        private Guid varLogin;
-        private String varSourceIP;
-        private DateTime varLogonDate;
-        private Boolean varIsSuccesful;
         [Key]
         [DataMember]
-        public Guid Id { get { return varId; } set { varId = value; } }
+        public Guid Id { get; set; }
 
         [DataMember]
         [ForeignKey("SecurityLogins")]
-        public Guid Login { get { return varLogin; } set { varLogin = value; } }
+        public Guid Login { get; set; }
 
         [DataMember]
         [Column("Source_IP")]
         [Display(Name = "Source IP")]
-        public String SourceIP { get { return varSourceIP; } set { varSourceIP = value; } }
+        public String SourceIP { get; set; }
 
         [DataMember]
         [Column("Logon_Date")]
         [Display(Name = "Logon Date")]
-        public DateTime LogonDate { get { return varLogonDate; } set { varLogonDate = value; } }
+        public DateTime LogonDate { get; set; }
 
         [DataMember]
         [Column("Is_Succesful")]
         [Display(Name = "Is Successful")]
-        public Boolean IsSuccesful { get { return varIsSuccesful; } set { varIsSuccesful = value; } }
+        public Boolean IsSuccesful { get; set; }
 
         public virtual SecurityLoginPoco SecurityLogins { get; set; }
     }

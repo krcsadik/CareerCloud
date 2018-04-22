@@ -8,22 +8,19 @@ namespace CareerCloud.Pocos
     [DataContract]
     public class SystemLanguageCodePoco 
     {
-        private String varLanguageID;
-        private String varName;
-        private String varNativeName;
         [Key]
         [DataMember]
-        public String LanguageID { get { return varLanguageID; } set { varLanguageID = value; } }
+        public String LanguageID { get; set; }
 
         [Required]
         [DataMember]
-        public String Name { get { return varName; } set { varName = value; } }
+        public String Name { get; set; }
 
         [Column("Native_Name")]
         [Display(Name = "Native Name")]
         [Required]
         [DataMember]
-        public String NativeName { get { return varNativeName; } set { varNativeName = value; } }
+        public String NativeName { get; set; }
 
         public virtual ICollection<CompanyDescriptionPoco> CompanyDescriptions { get; set; }
     }

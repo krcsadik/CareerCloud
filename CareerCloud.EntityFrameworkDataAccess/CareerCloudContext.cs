@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using CareerCloud.Pocos;
 using System.Data.Entity.Infrastructure.Interception;
-
+using System.Configuration;
 namespace CareerCloud.EntityFrameworkDataAccess
 {
 
@@ -15,7 +15,7 @@ namespace CareerCloud.EntityFrameworkDataAccess
         /* ... to be removed on assignment delivery*/
         private static bool isDbInterceptionInitialised = false;
 
-        public CareerCloudContext(bool proxyEnabled =true) : base("name=dbconnection")
+        public CareerCloudContext(bool proxyEnabled =true) : base(ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString)
         {
 
             Configuration.ProxyCreationEnabled = proxyEnabled; // for preventing xml serilization recursivity.

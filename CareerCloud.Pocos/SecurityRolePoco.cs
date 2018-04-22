@@ -8,20 +8,17 @@ namespace CareerCloud.Pocos
     [DataContract]
     public class SecurityRolePoco : IPoco
     {
-        private Guid varId;
-        private String varRole;
-        private Boolean varIsInactive;
         [Key]
         [DataMember]
-        public Guid Id { get { return varId; } set { varId = value; } }
+        public Guid Id { get; set; }
 
         [DataMember]
-        public String Role { get { return varRole; } set { varRole = value; } }
+        public String Role { get; set; }
 
         [Column("Is_Inactive")]
         [Display(Name = "Is Inactive")]
         [DataMember]
-        public Boolean IsInactive { get { return varIsInactive; } set { varIsInactive = value; } }
+        public Boolean IsInactive { get; set; }
 
         public virtual ICollection<SecurityLoginsRolePoco> SecuritysLoginsRoles { get; set; }
     }

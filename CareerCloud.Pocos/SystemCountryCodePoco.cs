@@ -8,15 +8,13 @@ namespace CareerCloud.Pocos
     [DataContract]
     public class SystemCountryCodePoco 
     {
-        private String varCode;
-        private String varName;
         [Key]
         [DataMember]
-        public String Code { get { return varCode; } set { varCode = value; } }
+        public String Code { get; set; }
 
         [Required]
         [DataMember]
-        public String Name { get { return varName; } set { varName = value; } }
+        public String Name { get; set; }
 
         public virtual ICollection<ApplicantProfilePoco> ApplicantProfiles { get; set; }
         public virtual ICollection<ApplicantWorkHistoryPoco> ApplicantWorkHistories { get; set; }

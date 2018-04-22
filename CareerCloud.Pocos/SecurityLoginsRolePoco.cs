@@ -7,21 +7,17 @@ namespace CareerCloud.Pocos
     [DataContract]
     public class SecurityLoginsRolePoco : IPoco
     {
-        private Guid varId;
-        private Guid varLogin;
-        private Guid varRole;
-        private Byte[] varTimeStamp;
         [Key]
         [DataMember]
-        public Guid Id { get { return varId; } set { varId = value; } }
+        public Guid Id { get; set; }
 
         [DataMember]
         [ForeignKey("SecurityLogins")]
-        public Guid Login { get { return varLogin; } set { varLogin = value; } }
+        public Guid Login { get; set; }
 
         [ForeignKey("SecurityRoles")]
         [DataMember]
-        public Guid Role { get { return varRole; } set { varRole = value; } }
+        public Guid Role { get; set; }
 
         [Column("Time_Stamp")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
@@ -29,7 +25,7 @@ namespace CareerCloud.Pocos
         [Timestamp]
         [ScaffoldColumn(false)]
         [DataMember]
-        public Byte[] TimeStamp { get { return varTimeStamp; } set { varTimeStamp = value; } }
+        public Byte[] TimeStamp { get; set; }
 
         public virtual SecurityLoginPoco SecurityLogins { get; set; }
         public virtual SecurityRolePoco SecurityRoles { get; set; }

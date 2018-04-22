@@ -8,32 +8,26 @@ namespace CareerCloud.Pocos
     [DataContract]
     public class CompanyJobPoco : IPoco
     {
-        private Guid varId;
-        private Guid varCompany;
-        private DateTime varProfileCreated;
-        private Boolean varIsInactive;
-        private Boolean varIsCompanyHidden;
-        private Byte[] varTimeStamp;
         [Key]
         [DataMember]
-        public Guid Id { get { return varId; } set { varId = value; } }
+        public Guid Id { get; set; }
 
         [ForeignKey("CompanyProfiles")]
         [DataMember]
-        public Guid Company { get { return varCompany; } set { varCompany = value; } }
+        public Guid Company { get; set; }
 
         [Column("Profile_Created")]
         [Display(Name="Posting Date")]
         [DataMember]
-        public DateTime ProfileCreated { get { return varProfileCreated; } set { varProfileCreated = value; } }
+        public DateTime ProfileCreated { get; set; }
 
         [Column("Is_Inactive")]
         [DataMember]
-        public Boolean IsInactive { get { return varIsInactive; } set { varIsInactive = value; } }
+        public Boolean IsInactive { get; set; }
 
         [Column("Is_Company_Hidden")]
         [DataMember]
-        public Boolean IsCompanyHidden { get { return varIsCompanyHidden; } set { varIsCompanyHidden = value; } }
+        public Boolean IsCompanyHidden { get; set; }
 
         [Column("Time_Stamp")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
@@ -41,7 +35,7 @@ namespace CareerCloud.Pocos
         [Timestamp]
         [ScaffoldColumn(false)]
         [DataMember]
-        public Byte[] TimeStamp { get { return varTimeStamp; } set { varTimeStamp = value; } }
+        public Byte[] TimeStamp { get; set; }
 
         public virtual ICollection<ApplicantJobApplicationPoco> ApplicantJobApplications { get; set; }
         public virtual ICollection<CompanyJobEducationPoco> CompanyJobEducations { get; set; }

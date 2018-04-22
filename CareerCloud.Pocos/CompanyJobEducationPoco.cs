@@ -7,25 +7,19 @@ namespace CareerCloud.Pocos
     [DataContract]
     public class CompanyJobEducationPoco : IPoco
     {
-        private Guid varId;
-        private Guid varJob;
-        private String varMajor;
-        private Int16 varImportance;
-        private Byte[] varTimeStamp;
-
         [Key]
         [DataMember]
-        public Guid Id { get { return varId; } set { varId = value; } }
+        public Guid Id { get; set; }
 
         [ForeignKey("CompanyJobs")]
         [DataMember]
-        public Guid Job { get { return varJob; } set { varJob = value; } }
+        public Guid Job { get; set; }
 
         [DataMember]
-        public String Major { get { return varMajor; } set { varMajor = value; } }
+        public String Major { get; set; }
 
         [DataMember]
-        public Int16 Importance { get { return varImportance; } set { varImportance = value; } }
+        public Int16 Importance { get; set; }
 
         [Column("Time_Stamp")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
@@ -33,7 +27,7 @@ namespace CareerCloud.Pocos
         [Timestamp]
         [ScaffoldColumn(false)]
         [DataMember]
-        public Byte[] TimeStamp { get { return varTimeStamp; } set { varTimeStamp = value; } }
+        public Byte[] TimeStamp { get; set; }
 
         public virtual CompanyJobPoco CompanyJobs { get; set; }
     }

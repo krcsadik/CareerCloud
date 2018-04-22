@@ -9,60 +9,49 @@ namespace CareerCloud.Pocos
     [DataContract]
     public class ApplicantProfilePoco : IPoco
     {
-        private Guid varId;
-        private Guid varLogin;
-        private Decimal? varCurrentSalary;
-        private Decimal? varCurrentRate;
-        private String varCurrency;
-        private String varCountry;
-        private String varProvince;
-        private String varStreet;
-        private String varCity;
-        private String varPostalCode;
-        private Byte[] varTimeStamp;
         [Key]
         [DataMember]
-        public Guid Id { get { return varId; } set { varId = value; } }
+        public Guid Id { get; set; }
 
         [ForeignKey("SecurityLogins")]
         [ScaffoldColumn(false)]
         [DataMember]
-        public Guid Login { get { return varLogin; } set { varLogin = value; } }
+        public Guid Login { get; set; }
 
         [Column("Current_Salary")]
         [Display(Name="Current Salary")]
         [DataMember]
-        public Decimal? CurrentSalary { get { return varCurrentSalary; } set { varCurrentSalary = value; } }
+        public Decimal? CurrentSalary { get; set; }
 
         [Column("Current_Rate")]
         [Display(Name = "Current Rate")]
         [DataMember]
-        public Decimal? CurrentRate { get { return varCurrentRate; } set { varCurrentRate = value; } }
+        public Decimal? CurrentRate { get; set; }
 
         [DataMember]
-        public String Currency { get { return varCurrency; } set { varCurrency = value; } }
+        public String Currency { get; set; }
 
         [Column("Country_Code")]
         [ForeignKey("SystemCountryCodes")]
         [DataMember]
-        public String Country { get { return varCountry; } set { varCountry = value; } }
+        public String Country { get; set; }
 
         [Column("State_Province_Code")]
         [DataMember]
-        public String Province { get { return varProvince; } set { varProvince = value; } }
+        public String Province { get; set; }
 
         [Column("Street_Address")]
         [DataMember]
-        public String Street { get { return varStreet; } set { varStreet = value; } }
+        public String Street { get; set; }
 
         [Column("City_Town")]
         [DataMember]
-        public String City { get { return varCity; } set { varCity = value; } }
+        public String City { get; set; }
 
         [Column("Zip_Postal_Code")]
         [Display(Name = "Postal Code")]
         [DataMember]
-        public String PostalCode { get { return varPostalCode; } set { varPostalCode = value; } }
+        public String PostalCode { get; set; }
 
         [Column("Time_Stamp")]
         [Timestamp]
@@ -70,7 +59,8 @@ namespace CareerCloud.Pocos
         [MaxLength(8)]
         [ScaffoldColumn(false)]
         [DataMember]
-        public Byte[] TimeStamp { get { return varTimeStamp; } set { varTimeStamp = value; } }
+        public Byte[] TimeStamp { get; set; }
+
         public virtual ICollection<ApplicantEducationPoco> ApplicantEducations { get; set; }
         public virtual ICollection<ApplicantJobApplicationPoco> ApplicantJobApplications { get; set; }
         public virtual SecurityLoginPoco SecurityLogins { get; set; }

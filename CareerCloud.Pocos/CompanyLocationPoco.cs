@@ -7,42 +7,34 @@ namespace CareerCloud.Pocos
     [DataContract]
     public class CompanyLocationPoco : IPoco
     {
-        private Guid varId;
-        private Guid varCompany;
-        private String varCountryCode;
-        private String varProvince;
-        private String varStreet;
-        private String varCity;
-        private String varPostalCode;
-        private Byte[] varTimeStamp;
         [Key]
         [DataMember]
-        public Guid Id { get { return varId; } set { varId = value; } }
+        public Guid Id { get; set; }
 
         [ForeignKey("CompanyProfiles")]
         [DataMember]
-        public Guid Company { get { return varCompany; } set { varCompany = value; } }
+        public Guid Company { get; set; }
 
         [Column("Country_Code")]
         [DataMember]
-        public String CountryCode { get { return varCountryCode; } set { varCountryCode = value; } }
+        public String CountryCode { get; set; }
 
         [Column("State_Province_Code")]
         [DataMember]
-        public String Province{ get { return varProvince; } set { varProvince = value; } }
+        public String Province{ get; set; }
 
         [Column("Street_Address")]
         [DataMember]
-        public String Street { get { return varStreet; } set { varStreet = value; } }
+        public String Street { get; set; }
 
         [Column("City_Town")]
         [DataMember]
-        public String City { get { return varCity; } set { varCity = value; } }
+        public String City { get; set; }
 
         [Column("Zip_Postal_Code")]
         [DataMember]
         [Display(Name = "Postal Code")]
-        public String PostalCode { get { return varPostalCode; } set { varPostalCode = value; } }
+        public String PostalCode { get; set; }
 
         [Column("Time_Stamp")]
         [DataMember]
@@ -50,7 +42,7 @@ namespace CareerCloud.Pocos
         [MaxLength(8)]
         [Timestamp]
         [ScaffoldColumn(false)]
-        public Byte[] TimeStamp { get { return varTimeStamp; } set { varTimeStamp = value; } }
+        public Byte[] TimeStamp { get; set; }
 
         public virtual CompanyProfilePoco CompanyProfiles { get; set; }
     }

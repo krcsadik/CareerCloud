@@ -8,46 +8,37 @@ namespace CareerCloud.Pocos
     [DataContract]
     public class ApplicantEducationPoco : IPoco
     {
-        private Guid varId;
-        private Guid varApplicant;
-        private String varMajor;
-        private String varCertificateDiploma;
-        private DateTime? varStartDate;
-        private DateTime? varCompletionDate;
-        private Byte? varCompletionPercent;
-        private Byte[] varTimeStamp;
-
         [Key]
         [DataMember]
-        public Guid Id { get { return varId; } set { varId = value; } }
+        public Guid Id { get; set; }
 
         [ForeignKey("ApplicantProfiles")]
         [DataMember]
-        public Guid Applicant { get { return varApplicant; } set { varApplicant = value; } }
+        public Guid Applicant { get; set; }
 
         [Required]
         [DataMember]
-        public String Major { get { return varMajor; } set { varMajor = value; } }
+        public String Major { get; set; }
 
         [Column("Certificate_Diploma")]
         [DataMember]
         [Display(Name = "Certificate / Diploma")]
-        public String CertificateDiploma { get { return varCertificateDiploma; } set { varCertificateDiploma = value; } }
+        public String CertificateDiploma { get; set; }
 
         [Column("Start_Date")]
         [Display(Name = "Start Date")]
         [DataMember]
-        public DateTime? StartDate { get { return varStartDate; } set { varStartDate = value; } }
+        public DateTime? StartDate { get; set; }
 
         [Display(Name = "Completion Date")]
         [Column("Completion_Date")]
         [DataMember]
-        public DateTime? CompletionDate { get { return varCompletionDate; } set { varCompletionDate = value; } }
+        public DateTime? CompletionDate { get; set; }
 
         [Display(Name = "Completion Percent")]
         [Column("Completion_Percent")]
         [DataMember]
-        public Byte? CompletionPercent { get { return varCompletionPercent; } set { varCompletionPercent = value; } }
+        public Byte? CompletionPercent { get; set; }
 
         [Column("Time_Stamp")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
@@ -55,7 +46,7 @@ namespace CareerCloud.Pocos
         [Timestamp]
         [ScaffoldColumn(false)]
         [DataMember]
-        public Byte[] TimeStamp { get { return varTimeStamp; } set { varTimeStamp = value; } }
+        public Byte[] TimeStamp { get; set; }
 
         public virtual ApplicantProfilePoco ApplicantProfiles { get; set; }
     }

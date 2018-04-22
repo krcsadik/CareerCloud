@@ -8,28 +8,23 @@ namespace CareerCloud.Pocos
     [DataContract]
     public class ApplicantJobApplicationPoco : IPoco
     {
-        private Guid varId;
-        private Guid varApplicant;
-        private Guid varJob;
-        private DateTime varApplicationDate;
-        private Byte[] varTimeStamp;
         [Key]
         [DataMember]
-        public Guid Id { get { return varId; } set { varId = value; } }
+        public Guid Id { get; set; }
 
         [ForeignKey("ApplicantProfiles")]
         [DataMember]
-        public Guid Applicant { get { return varApplicant; } set { varApplicant = value; } }
+        public Guid Applicant { get; set; }
 
         [ForeignKey("CompanyJobs")]
         [DataMember]
-        public Guid Job { get { return varJob; } set { varJob = value; } }
+        public Guid Job { get; set; }
 
         [Column("Application_Date")]
         [Display(Name = "Application Date")]
         [Required]
         [DataMember]
-        public DateTime ApplicationDate { get { return varApplicationDate; } set { varApplicationDate = value; } }
+        public DateTime ApplicationDate { get; set; }
 
         [Column("Time_Stamp")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
@@ -37,7 +32,8 @@ namespace CareerCloud.Pocos
         [Timestamp]
         [ScaffoldColumn(false)]
         [DataMember]
-        public Byte[] TimeStamp { get { return varTimeStamp; } set { varTimeStamp = value; } }
+        public Byte[] TimeStamp { get; set;
+        }
         public virtual ApplicantProfilePoco ApplicantProfiles { get; set; }
         public virtual CompanyJobPoco CompanyJobs { get; set; }
     }

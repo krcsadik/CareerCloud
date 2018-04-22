@@ -1,40 +1,35 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;using System.Runtime.Serialization;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
+
 namespace CareerCloud.Pocos
 {
     [Table("Company_Descriptions")]
     [DataContract]
     public class CompanyDescriptionPoco : IPoco
     {
-        private Guid varId;
-        private Guid varCompany;
-        private String varLanguageId;
-        private String varCompanyName;
-        private String varCompanyDescription;
-        private Byte[] varTimeStamp;
         [Key]
         [DataMember]
-        public Guid Id { get { return varId; } set { varId = value; } }
+        public Guid Id { get; set; }
 
         [ForeignKey("CompanyProfiles")]
         [DataMember]
-        public Guid Company { get { return varCompany; } set { varCompany = value; } }
+        public Guid Company { get; set; }
 
         [ForeignKey("SystemLanguageCodes")]
         [DataMember]
-        public String LanguageId { get { return varLanguageId; } set { varLanguageId = value; } }
+        public String LanguageId { get; set; }
 
         [Column("Company_Name")]
         [Display(Name ="Company Name")]
         [DataMember]
-        public String CompanyName { get { return varCompanyName; } set { varCompanyName = value; } }
+        public String CompanyName { get; set; }
 
         [Column("Company_Description")]
         [Display(Name = "Company Description")]
         [DataMember]
-        public String CompanyDescription { get { return varCompanyDescription; } set { varCompanyDescription = value; } }
+        public String CompanyDescription { get; set; }
 
         [Column("Time_Stamp")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
@@ -42,7 +37,7 @@ namespace CareerCloud.Pocos
         [Timestamp]
         [ScaffoldColumn(false)]
         [DataMember]
-        public Byte[] TimeStamp { get { return varTimeStamp; } set { varTimeStamp = value; } }
+        public Byte[] TimeStamp { get; set; }
 
         public virtual CompanyProfilePoco CompanyProfiles { get; set; }
         public virtual SystemLanguageCodePoco SystemLanguageCodes { get; set; }
